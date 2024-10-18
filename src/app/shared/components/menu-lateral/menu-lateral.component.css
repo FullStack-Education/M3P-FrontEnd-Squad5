@@ -1,0 +1,47 @@
+.menu-lateral {
+    font-family: Arial, sans-serif;
+    background-color: #6c63ff;
+    position: fixed;
+  }
+  
+  .menu-lateral button:first-child {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+    padding: 0px 8px;
+  }
+
+   .menu-lateral div{
+    width: 250px;
+    height: 100vh;
+  }
+
+  .menu-lateral button:first-child:hover {
+    background-color:  #5a54cc;
+  }
+  
+  .menu-lateral ul {
+    padding: 0;
+  }
+  
+  .menu-lateral ul li {
+    padding: 5px 20px;
+    text-align: left;
+  }
+  
+  .menu-lateral ul li button {
+    width: 100%;
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .menu-lateral ul li button:hover {
+    background-color:  #5a54cc;
+  }

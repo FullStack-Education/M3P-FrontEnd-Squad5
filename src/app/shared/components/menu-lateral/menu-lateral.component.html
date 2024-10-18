@@ -1,0 +1,15 @@
+<nav class="menu-lateral">
+    <button (click)="abreFechaMenu()">&equiv;</button> 
+    <div  *ngIf="isMenuOpen">
+      <ul>
+        <li><button (click)="navegarPara('/home')">Início</button></li>
+        <li *ngIf="isAdmin"><button (click)="navegarPara('/cadastro-docente')">Cadastro de Docente</button></li>
+        <li *ngIf="isAdmin"><button (click)="navegarPara('/cadastro-aluno')">Cadastro de Aluno</button></li>
+        <li *ngIf="isAdmin || isDocente"><button (click)="navegarPara('/cadastro-turma')">Cadastro de Turma</button></li>
+        <li *ngIf="isAdmin || isDocente"><button (click)="navegarPara('/cadastro-nota')">Cadastro de Nota</button></li>
+        <li *ngIf="isAdmin"><button (click)="navegarPara('/listagem-docentes')">Listagem de Docentes</button></li>
+        <li *ngIf="isAluno"><button (click)="navegarPara('/notas')">Notas</button></li>
+        <li><button (click)="logout()">Sair</button></li>
+      </ul>
+    </div>
+  </nav>

@@ -1,0 +1,8 @@
+  <div class="card">
+    <img src="user.png" alt="User Icon" class="aluno-icon">
+    <h3>{{ aluno?.nome }}</h3>
+    <p class="idade">{{ aluno?.idade }} anos</p>
+    <p> {{ aluno?.email }}</p>
+    <button *ngIf="isAdmin && aluno" (click)="verMais(aluno.id)">Ver Mais</button>
+    <button *ngIf="isDocente" (click)="lancarNota()">Lançar Nota</button>
+  </div>

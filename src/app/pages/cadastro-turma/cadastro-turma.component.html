@@ -1,0 +1,35 @@
+<div class="cadastro-turma" *ngIf="isAdmin || isDocente">
+    <h1>Cadastrar nova turma</h1>
+    <form [formGroup]="turmaForm" class="container-grid" (ngSubmit)="salvarTurma()">
+    <div class="col-3">
+        <label for="nome">Nome:</label>
+        <input id="nome" formControlName="nome" type="text">
+      </div>
+      <div>
+        <label for="dataInicio">Data de Inicio:</label>
+        <input id="dataInicio" formControlName="dataInicio" type="date">
+      </div> 
+      <div>
+        <label for="dataTermino">Data de Término:</label>
+        <input id="dataTermino" formControlName="dataTermino" type="date" />
+      </div>
+      <div>
+        <label for="horario">Horário da Turma:</label>
+        <input id="horario" formControlName="horario" type="time" />
+      </div>
+        <div>
+            <label for="docente">Docente:</label>
+            <select id="docente" formControlName="docente">
+            <option value="" disabled selected *ngIf="isAdmin ">Selecione uma opção</option>
+            <option *ngFor="let docente of docentes">{{ docente.nome }}</option>
+            </select>       
+        </div>
+        <div class="botoes">
+        <button type="submit" [disabled]="isEdit">Salvar</button>
+        <button type="button" [disabled]="!isEdit">Editar</button>
+        <button type="button" [disabled]="!isEdit">Deletar</button>
+      </div>
+    </form>
+  </div>
+
+  

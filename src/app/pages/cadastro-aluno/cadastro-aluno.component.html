@@ -1,0 +1,95 @@
+<div class="cadastro-aluno" *ngIf="isAdmin">
+    <h1>Cadastrar novo aluno</h1>
+    <form [formGroup]="alunoForm" class="container-grid" (ngSubmit)="salvarAluno()">
+    <div class="col-3">
+        <label for="nome">Nome Completo:</label>
+        <input id="nome" formControlName="nome" type="text">
+      </div>
+      <div>
+       <label for="genero">Gênero:</label>
+        <select id="genero" formControlName="genero">
+          <option *ngFor="let genero of generos">{{ genero }}</option>
+        </select>
+      </div> 
+      <div>
+        <label for="dataNascimento">Data de Nascimento:</label>
+        <input id="dataNascimento" formControlName="dataNascimento" type="date">
+      </div> 
+       <div>
+        <label for="cpf">CPF:</label>
+        <input id="cpf" formControlName="cpf" type="text">
+      </div>
+      <div>
+        <label for="rg">RG:</label>
+        <input id="rg" formControlName="rg" type="text">
+      </div>
+      <div >
+        <label for="estadoCivil">Estado Civil:</label>
+        <select id="estadoCivil" formControlName="estadoCivil">
+          <option *ngFor="let estadoCivil of estadosCivis">{{ estadoCivil }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="telefone">Telefone:</label>
+        <input id="telefone" formControlName="telefone" type="text">
+      </div>
+      <div>
+        <label for="email">E-mail:</label>
+        <input id="email" formControlName="email" type="email">
+      </div>
+      <div>
+        <label for="senha">Senha:</label>
+        <input id="senha" formControlName="senha" type="password">
+      </div>
+      <div>
+        <label for="naturalidade">Naturalidade:</label>
+        <input id="naturalidade" formControlName="naturalidade" type="text">
+      </div>
+      <div >
+        <label for="cep">CEP:</label>
+        <input id="cep" formControlName="cep" type="text" (blur)="buscarCep()">
+      </div>
+      <div >
+        <label for="cidade">Cidade:</label>
+        <input id="cidade" formControlName="cidade" type="text">
+      </div>
+      <div >
+        <label for="estado">Estado:</label>
+        <input id="estado" formControlName="estado" type="text" >
+      </div>
+      <div class="col-2">
+        <label for="logradouro">Logradouro:</label>
+        <input id="logradouro" formControlName="logradouro" type="text">
+      </div>
+      <div>
+        <label for="numero">Número:</label>
+        <input id="numero" formControlName="numero" type="text">
+      </div>
+      <div>
+        <label for="complemento">Complemento:</label>
+        <input id="complemento" formControlName="complemento" type="text">
+      </div>
+      <div>
+        <label for="bairro">Bairro:</label>
+        <input id="bairro" formControlName="bairro" type="text">
+      </div>
+      <div>
+        <label for="pontoReferencia">Ponto de Referência:</label>
+        <input id="pontoReferencia" formControlName="pontoReferencia" type="text">
+      </div>
+      <div class="col-2">
+        <label for="turmas">Turmas:</label>
+        <select id="turmas" formControlName="turmas" multiple>
+          <option *ngFor="let turma of turmas">{{ turma.nome }}</option>
+        </select>
+      </div> 
+
+      <div class="botoes">
+        <button type="submit" [disabled]="isEdit">Salvar</button>
+        <button type="button" (click)="editarAluno()" [disabled]="!isEdit">Editar</button>
+        <button type="button" (click)="deletarAluno()"[disabled]="!isEdit">Deletar</button>
+      </div>
+    </form>
+  </div>
+
+  

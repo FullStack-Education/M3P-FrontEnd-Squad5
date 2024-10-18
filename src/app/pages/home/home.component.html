@@ -1,0 +1,72 @@
+  <main>
+        <div *ngIf="isAdmin" class="estatisticas">
+          <h2>Estatísticas do Sistema</h2>
+          <div class="estatistica">
+            <h3>Alunos</h3>
+            <p>{{ estatisticas.numeroAlunos }}</p>
+          </div>
+          <div class="estatistica">
+            <h3>Docentes</h3>
+            <p>{{ estatisticas.numeroDocentes }}</p>
+          </div>
+          <div class="estatistica">
+            <h3>Turmas</h3>
+            <p>{{ estatisticas.numeroTurmas }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="isAdmin || isDocente"  class="pesquisa">
+            <div class="campo-pesquisa">
+            <input 
+              type="text" 
+              placeholder="Digite nome, telefone ou e-mail" 
+              [(ngModel)]="valorBusca" 
+              (input)="buscaAluno()"
+            />
+            <button (click)="selecionaPrimeiroAluno()">Buscar</button>
+            </div>
+            <div class="resultados-busca" *ngIf="valorBusca; else templateTodosAlunos">
+                <app-card
+                *ngFor="let aluno of alunosEncontrados"
+                [aluno]="aluno">
+              </app-card>
+              </div>
+            
+          </div>
+
+          <ng-template #templateTodosAlunos>
+            <div *ngIf="isAdmin || isDocente" class="alunos" >
+              <app-card
+                *ngFor="let aluno of alunos"
+                [aluno]="aluno">
+              </app-card>
+            </div>
+            </ng-template>
+
+            <div *ngIf="isAluno" class="aluno-home">
+                <section class="minhas-notas">
+                  <h2>Minhas Notas</h2>
+                  <div (click)="navegarPaginaNotasAluno()" class="nota" *ngFor="let nota of notas | slice:0:3">
+                    <!-- slice seleciona um subconjunto da notas [0, 3) -->
+                    <h3>{{ nota.nome }}</h3>
+                    <p>{{  nota.materia }}</p>
+                    <p>{{  nota.data }}</p>
+                  </div>
+                </section>
+              
+                <section class="minhas-materias">
+                  <h2>Minhas Matérias</h2>
+                  <div class="materia" *ngFor="let materia of materias">
+                    <h3>{{ materia.nome }}</h3>
+                  </div>
+                </section>
+              
+                <section class="cursos-extras">
+                  <h2>Cursos Extras</h2>
+                  <div class="curso" *ngFor="let curso of cursosExtras">
+                    <h3>{{ curso.nome }}</h3>
+                  </div>
+                </section>
+              </div>
+  </main>
+

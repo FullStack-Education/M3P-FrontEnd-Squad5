@@ -1,0 +1,39 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+
+.toolbar-center {
+  display: flex;
+  align-items: center;
+}
+
+
+.toolbar-center img {
+  width: 125px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-right span {
+  margin-right: 10px;
+  font-size: 1em;
+  color: #333;
+}
+
+.user-icon {
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  border-radius: 50%;
+  border: 1px solid #333;
+}

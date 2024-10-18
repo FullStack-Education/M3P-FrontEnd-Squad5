@@ -1,0 +1,131 @@
+main{
+    margin-left: 250px;
+}
+
+/* HOME ADM E DOCENTES */
+.alunos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.resultados-busca{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pesquisa {
+    margin-top: 50px;
+  }
+  
+  .campo-pesquisa {
+    display: flex;
+    justify-content: center;
+  }
+
+  .campo-pesquisa button {
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 0px;
+  }
+  .pesquisa input {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+.estatisticas{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+  }
+
+  .estatisticas h2{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;}
+  
+   .estatistica{
+    border: 1px solid #333;
+    padding: 10px;
+    margin: 10px;
+    width: 150px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f5ebff;
+    border-radius: 5%;
+  }
+    
+  .estatistica h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .estatistica p {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+  }
+  
+  /* HOME ALUNOS */
+
+  .aluno-home {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  section {
+    background: #f5ebff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 25%;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .nota {
+    color: #333;
+    margin-bottom: 10px; 
+    cursor: pointer;
+    }
+
+    .nota p {   
+        margin: 0px;
+    }
+
+    .nota h3 {
+        margin: 0px;
+        color: black;
+        font-weight: bold;
+    }
+  
+   .materia, .curso {
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+  h3 {
+    margin: 0 0 10px;
+  }
+  
+  p {
+    margin: 0;
+  }

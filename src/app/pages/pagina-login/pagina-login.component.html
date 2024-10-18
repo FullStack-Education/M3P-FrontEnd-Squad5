@@ -1,0 +1,27 @@
+<body>
+  
+<div class="login">
+  <h2>Login</h2>
+    <form (ngSubmit)="entrar()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" [(ngModel)]="login.email" name="email" required />
+        </div>
+    
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" [(ngModel)]="login.senha" name="password" required />
+        </div>
+        <a href="#" (click)="esqueciSenha($event)">Esqueci minha senha</a>
+    
+        <button type="submit" class="enter-button">Entrar</button>
+
+        <div class="create-account">
+        <p>Não tem conta?</p>
+        <button type="button" class="account-button" (click)="criarConta()">Criar Conta</button>
+      </div>
+      </form>
+  </div>
+    <img src="Learning-cuate_amarela.png" >
+</body>
+  

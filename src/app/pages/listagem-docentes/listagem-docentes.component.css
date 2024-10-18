@@ -1,0 +1,52 @@
+.listagem-docentes-container {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.listagem-docentes-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: xx-large;
+}
+
+.docentes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.resultados-busca {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pesquisa {
+    margin-top: 50px;
+
+}
+
+.pesquisa input {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.campo-pesquisa {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.campo-pesquisa button {
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 0px;
+}

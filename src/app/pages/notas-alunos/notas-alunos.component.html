@@ -1,0 +1,29 @@
+<div class="notas-container" *ngIf="isAluno">
+  <h1>Notas do Aluno</h1>
+  <h4>{{alunoName}}</h4>
+
+    <h2>Histórico de Notas</h2>
+    <div *ngFor="let materia of agruparPorMateria()">
+      <h3>{{ materia.nome }}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Turma</th>
+            <th>Docente</th>
+            <th>Nome da Avaliação</th>
+            <th>Data</th>
+            <th>Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let nota of materia.notas">
+            <td>{{ nota.turma }}</td>
+            <td>{{ nota.docente }}</td>
+            <td>{{ nota.nome}}</td>
+            <td>{{ nota.data | date }}</td>
+            <td>{{ nota.nota }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

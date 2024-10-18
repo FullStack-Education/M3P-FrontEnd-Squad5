@@ -1,0 +1,87 @@
+.cadastro-nota {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5ebff;
+    border-radius: 10px;
+}
+
+.cadastro-nota h1 {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: xx-large;
+}
+
+.cadastro-nota .turma {
+    margin-bottom: 20px;
+}
+
+.cadastro-nota form div {
+    margin-bottom: 10px;
+}
+
+.cadastro-nota label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.cadastro-nota input,
+.cadastro-nota select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.botoes {
+    display: flex;
+    justify-content: space-between;
+}
+
+.botoes button {
+    width: 100px;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border-radius: 5%;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+button:hover {
+    background-color: #777676;
+}
+
+.botoes button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.container-grid {
+    display: grid;
+    /* define 4 colunas */
+    grid-template-columns: auto auto auto auto;
+    gap: 15px;
+
+}
+
+.container-grid div {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-1 {
+    grid-column: span 1;
+}
+
+.col-2 {
+    grid-column: span 2;
+}
+
+.col-3 {
+    grid-column: span 3;
+}
+
+.col-4 {
+    grid-column: span 4;
+}

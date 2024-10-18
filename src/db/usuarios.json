@@ -1,0 +1,211 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nome": "Charles Francis Xavier",
+      "email": "adm@school.com",
+      "senha": "pass1",
+      "perfil": "Administrador",
+      "idade": 68,
+      "telefone": "(11) 9 9999-9999"
+    },
+    {
+      "id": "2",
+      "nome": "James Logan Howlett",
+      "email": "docente@school.com",
+      "senha": "pass2",
+      "perfil": "Docente",
+      "idade": 101,
+      "telefone": "(11) 9 9999-9999"
+    },
+    {
+      "id": "3",
+      "nome": "Jean Elaine Grey",
+      "email": "aluno@school.com",
+      "senha": "pass3",
+      "perfil": "Aluno",
+      "idade": 28,
+      "telefone": "(11) 9 9999-9999"
+    },
+    {
+      "id": "4",
+      "nome": "Scott Summers",
+      "email": "aluno2@school.com",
+      "senha": "pass3",
+      "perfil": "Aluno",
+      "idade": 29,
+      "telefone": "(11) 9 9999-9999"
+    },
+    {
+      "id": "5",
+      "nome": "Ororo Munroe",
+      "email": "docente2@school.com",
+      "senha": "pass2",
+      "perfil": "Docente",
+      "idade": 32,
+      "telefone": "(11) 9 9999-9999"
+    }
+  ],
+  "turmas": [
+    {
+      "id": "1",
+      "nome": "Matemática Aplicada à Física",
+      "dataInicio": "2024-01-15",
+      "dataTermino": "2024-06-30",
+      "horario": "08:00 - 10:00",
+      "professor": "James Logan Howlett"
+    },
+    {
+      "id": "2",
+      "nome": "Física Avançada: Teoria da Relatividade",
+      "dataInicio": "2024-02-01",
+      "dataTermino": "2024-07-15",
+      "horario": "10:00 - 12:00",
+      "professor": "James Logan Howlett"
+    },
+    {
+      "id": "3",
+      "nome": "Quimica Orgânica",
+      "dataInicio": "2024-03-01",
+      "dataTermino": "2024-08-01",
+      "horario": "13:00 - 15:00",
+      "professor": "James Logan Howlett"
+    },
+    {
+      "id": "4",
+      "nome": "Biologia Molecular e Genética",
+      "dataInicio": "2024-04-01",
+      "dataTermino": "2024-09-01",
+      "horario": "15:00 - 17:00",
+      "professor": "Ororo Munroe"
+    },
+    {
+      "id": "5",
+      "nome": "Guerras Mundiais",
+      "dataInicio": "2024-05-01",
+      "dataTermino": "2024-10-01",
+      "horario": "17:00 - 19:00",
+      "professor": "Ororo Munroe"
+    }
+  ],
+  "materias": [
+    {
+      "id": "1",
+      "nome": "Matemática"
+    },
+    {
+      "id": "2",
+      "nome": "História"
+    },
+    {
+      "id": "3",
+      "nome": "Física"
+    }
+  ],
+  "cursosExtras": [
+    {
+      "id": "1",
+      "nome": "Programação em Python"
+    },
+    {
+      "id": "2",
+      "nome": "Front End"
+    },
+    {
+      "id": "3",
+      "nome": "Design Gráfico"
+    }
+  ],
+  "notas": [
+    {
+      "id": "1",
+      "turma": "Matemática Aplicada à Física",
+      "docente": "James Logan Howlett",
+      "nome": "Prova de Algebra Linear",
+      "materia": "Matemática",
+      "data": "2024-07-30",
+      "aluno": "Jean Elaine Grey",
+      "nota": 8.5
+    },
+    {
+      "id": "2",
+      "turma": "Guerras Mundiais",
+      "docente": "James Logan Howlett",
+      "nome": "Prova sobre Guerra Fria",
+      "materia": "História",
+      "data": "2024-06-20",
+      "aluno": "Jean Elaine Grey",
+      "nota": 7.5
+    },
+    {
+      "id": "3",
+      "turma": "Física Avançada: Teoria da Relatividade",
+      "docente": "James Logan Howlett",
+      "nome": "Prova de Relatividade Restrita",
+      "materia": "Física",
+      "data": "2024-05-30",
+      "aluno": "Jean Elaine Grey",
+      "nota": 9
+    },
+    {
+      "id": "4",
+      "turma": "Guerras Mundiais",
+      "docente": "James Logan Howlett",
+      "nome": "Prova sobre Guerra Fria",
+      "materia": "História",
+      "data": "2024-07-20",
+      "aluno": "Jean Elaine Grey",
+      "nota": 8.5
+    },
+    {
+      "id": "5",
+      "turma": "Guerras Mundiais",
+      "docente": "James Logan Howlett",
+      "nome": "Prova sobre Guerra Fria",
+      "materia": "História",
+      "data": "2024-06-20",
+      "aluno": "Scott Summers",
+      "nota": 7.5
+    },
+    {
+      "id": "6",
+      "turma": "Física Avançada: Teoria da Relatividade",
+      "docente": "James Logan Howlett",
+      "nome": "Prova de Relatividade Restrita",
+      "materia": "Física",
+      "data": "2024-05-30",
+      "aluno": "Scott Summers",
+      "nota": 9
+    },
+    {
+      "id": "7",
+      "turma": "Física Avançada: Teoria da Relatividade",
+      "docente": "James Logan Howlett",
+      "nome": "Prova de Relatividade Restrita",
+      "materia": "Física",
+      "data": "2024-06-30",
+      "aluno": "Scott Summers",
+      "nota": 8.5
+    },
+    {
+      "id": "8",
+      "turma": "Guerras Mundiais",
+      "docente": "James Logan Howlett",
+      "nome": "Prova sobre Guerra Fria",
+      "materia": "História",
+      "data": "2024-07-20",
+      "aluno": "Scott Summers",
+      "nota": 7.5
+    },
+    {
+      "id": "9",
+      "turma": "Física Avançada: Teoria da Relatividade",
+      "docente": "James Logan Howlett",
+      "nome": "Prova de Relatividade Restrita",
+      "materia": "Física",
+      "data": "2024-07-15",
+      "aluno": "Scott Summers",
+      "nota": 9
+    }
+  ]
+}

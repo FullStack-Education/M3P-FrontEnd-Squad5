@@ -1,0 +1,22 @@
+<div class="listagem-docentes-container" *ngIf="isAdmin">
+    <h1>Listagem de Docentes</h1>
+
+    <div *ngIf="isAdmin" class="pesquisa">
+        <div class="campo-pesquisa">
+            <input type="text" placeholder="Digite nome ou id" [(ngModel)]="valorBusca" (input)="buscaDocente()" />
+            <button (click)="selecionaPrimeiroDocente()">Buscar</button>
+        </div>
+        <div class="resultados-busca" *ngIf="valorBusca; else templateTodosDocentes">
+            <app-card-docente *ngFor="let docente of docentesEncontrados" [docente]="docente">
+            </app-card-docente>
+        </div>
+
+    </div>
+
+    <ng-template #templateTodosDocentes>
+        <div *ngIf="isAdmin" class="docentes">
+            <app-card-docente *ngFor="let docente of docentes" [docente]="docente">
+            </app-card-docente>
+        </div>
+    </ng-template>
+</div>

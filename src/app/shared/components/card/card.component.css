@@ -1,0 +1,40 @@
+.card {
+    border: 1px solid #333;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f5ebff;
+    border-radius: 5%;
+  }
+  
+  
+  .aluno-icon {
+    background-color: white;
+    padding: 3px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+
+ .idade{
+    font-size: 1em;
+    color: #777676;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border-radius: 5%;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #777676;
+  }

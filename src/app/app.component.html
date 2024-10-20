@@ -1,7 +1,8 @@
 <div *ngIf="router.url !== '/login'">
-    <app-menu-lateral></app-menu-lateral>
-  </div>
-  <div *ngIf="router.url !== '/login'">
-    <app-toolbar></app-toolbar>
-  </div>
+  <app-menu-lateral></app-menu-lateral>
+</div>
+<div *ngIf="router.url !== '/login'">
+  <app-toolbar></app-toolbar>
+</div>
+<ngx-loading-bar [color]="'#6c63ff'" [includeSpinner]="false"></ngx-loading-bar>
 <router-outlet></router-outlet>

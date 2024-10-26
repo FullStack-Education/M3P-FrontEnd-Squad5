@@ -9,7 +9,7 @@ import { MenuLateralService } from '../../services/menu-lateral.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './menu-lateral.component.html',
-  styleUrl: './menu-lateral.component.css'
+  styleUrl: './menu-lateral.component.scss'
 })
 export class MenuLateralComponent {
 

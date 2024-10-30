@@ -8,25 +8,25 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './card-docente.component.html',
-  styleUrl: './card-docente.component.css'
+  styleUrl: './card-docente.component.scss',
 })
 export class CardDocenteComponent {
-  @Input() docente: {
-    nome: string,
-    id: string,
-    email: string,
-  } | undefined;
-
+  @Input() docente:
+    | {
+        nome: string;
+        id: string;
+        email: string;
+      }
+    | undefined;
 
   constructor(
     private router: Router,
     private menuLateralService: MenuLateralService
-  ) { }
+  ) {}
 
-  verMais(id:string): void {
+  verMais(id: string): void {
     this.router.navigate(['/cadastro-docente', id]);
   }
-
 
   get isAdmin(): boolean {
     let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
@@ -42,5 +42,4 @@ export class CardDocenteComponent {
     let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
     return perfilLogado === 'Aluno';
   }
-
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { AlunoService } from '../../shared/services/aluno.service';
-import { CardComponent } from "../../shared/components/card/card.component";
+import { CardComponent } from '../../shared/components/card/card.component';
 import { CommonModule } from '@angular/common';
 import { DocentesService } from '../../shared/services/docentes.service';
 import { TurmasService } from '../../shared/services/turmas.service';
@@ -14,25 +14,22 @@ import { NotasService } from '../../shared/services/notas.service';
 import { NotaInterface } from '../../shared/interfaces/nota.interface';
 import { CursosInterface } from '../../shared/interfaces/cursos.interface';
 import { Router } from '@angular/router';
+import { NgIconComponent } from '@ng-icons/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, CommonModule, FormsModule],
+  imports: [CardComponent, CommonModule, FormsModule, NgIconComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.scss',
 })
-
-
-
 export class HomeComponent implements OnInit {
-
   alunos: UsuarioInterface[] = [];
 
-   estatisticas: EstatisticasInterface = {
+  estatisticas: EstatisticasInterface = {
     numeroAlunos: 0,
     numeroDocentes: 0,
-    numeroTurmas: 0
+    numeroTurmas: 0,
   };
 
   valorBusca: string = '';
@@ -44,93 +41,106 @@ export class HomeComponent implements OnInit {
   cursosExtras: CursosInterface[] = [];
   alunoName: string = '';
 
-
-  constructor(private alunoService: AlunoService,
-              private docenteService: DocentesService, 
-              private turmaService : TurmasService, 
-              private materiasService : MateriasService,
-              private notasService : NotasService, 
-              private cursosExtraService : CursosExtraService, 
-              private menuLateralService: MenuLateralService,
-              private router: Router) { }
+  constructor(
+    private alunoService: AlunoService,
+    private docenteService: DocentesService,
+    private turmaService: TurmasService,
+    private materiasService: MateriasService,
+    private notasService: NotasService,
+    private cursosExtraService: CursosExtraService,
+    private menuLateralService: MenuLateralService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.alunoName = this.getNameUsuarioLogado();
     this.carregarAlunos();
     this.carregarEstatisticas();
     console.log(this.alunos);
-     this.getNotasAluno();
+    this.getNotasAluno();
 
-    this.materiasService.getMaterias().subscribe(data => this.materias = data);
-    this.cursosExtraService.getCursosExtras().subscribe(data => this.cursosExtras = data);
+    this.materiasService
+      .getMaterias()
+      .subscribe((data) => (this.materias = data));
+    this.cursosExtraService
+      .getCursosExtras()
+      .subscribe((data) => (this.cursosExtras = data));
   }
 
-  getNotasAluno(){
+  getNotasAluno() {
     this.notasService.getNotasByAlunoName(this.alunoName).subscribe((notas) => {
-      this.notas = notas.sort((a, b) =>  new Date(b.data).getTime() - new Date(a.data).getTime());
+      this.notas = notas.sort(
+        (a, b) => new Date(b.data).getTime() - new Date(a.data).getTime()
+      );
     });
   }
 
-  carregarEstatisticas(): void{
-      this.alunoService.numeroAlunosMatriculados().subscribe(numeroAlunos => {
-        console.log(numeroAlunos);
-        this.estatisticas.numeroAlunos = numeroAlunos;
-      });
-      this.docenteService.numeroDocentesMatriculados().subscribe(numeroDocentes => {
+  carregarEstatisticas(): void {
+    this.alunoService.numeroAlunosMatriculados().subscribe((numeroAlunos) => {
+      console.log(numeroAlunos);
+      this.estatisticas.numeroAlunos = numeroAlunos;
+    });
+    this.docenteService
+      .numeroDocentesMatriculados()
+      .subscribe((numeroDocentes) => {
         console.log(numeroDocentes);
         this.estatisticas.numeroDocentes = numeroDocentes;
       });
-      this.turmaService.numeroTurmasCadastradas().subscribe(numeroTurmas => {
-        console.log(numeroTurmas);
-        this.estatisticas.numeroTurmas = numeroTurmas;
-      });
+    this.turmaService.numeroTurmasCadastradas().subscribe((numeroTurmas) => {
+      console.log(numeroTurmas);
+      this.estatisticas.numeroTurmas = numeroTurmas;
+    });
   }
 
   carregarAlunos(): void {
-    this.alunoService.getAlunosMatriculados().subscribe(alunos => {
+    this.alunoService.getAlunosMatriculados().subscribe((alunos) => {
       this.alunos = alunos;
     });
-}
-
-buscaAluno() {
-  if (this.valorBusca) {
-    this.alunosEncontrados = this.alunos.filter((aluno) =>
-      aluno.nome.toLowerCase().includes(this.valorBusca.toLowerCase()) ||
-      aluno.telefone.toLowerCase().includes(this.valorBusca.toLowerCase()) ||
-      aluno.email.toLowerCase().includes(this.valorBusca.toLowerCase())
-    );
-  } else {
-    this.alunosEncontrados = this.alunos;
   }
-}
 
-selecionaPrimeiroAluno() {
-  this.valorBusca = this.alunosEncontrados[0].nome;
-  this.buscaAluno();
-}
+  buscaAluno() {
+    if (this.valorBusca) {
+      this.alunosEncontrados = this.alunos.filter(
+        (aluno) =>
+          aluno.nome.toLowerCase().includes(this.valorBusca.toLowerCase()) ||
+          aluno.telefone
+            .toLowerCase()
+            .includes(this.valorBusca.toLowerCase()) ||
+          aluno.email.toLowerCase().includes(this.valorBusca.toLowerCase())
+      );
+    } else {
+      this.alunosEncontrados = this.alunos;
+    }
+  }
 
-navegarPaginaNotasAluno() {
-   this.router.navigate(['/notas']);
-}
+  selecionaPrimeiroAluno() {
+    this.valorBusca = this.alunosEncontrados[0].nome;
+    this.buscaAluno();
+  }
 
-getNameUsuarioLogado(): string {
-  const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado') || '{}');
-  return usuarioLogado.nome || '';
-}
+  navegarPaginaNotasAluno() {
+    this.router.navigate(['/notas']);
+  }
 
-get isAdmin(): boolean {
-  let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-  return perfilLogado === 'Administrador';
-}
+  getNameUsuarioLogado(): string {
+    const usuarioLogado = JSON.parse(
+      sessionStorage.getItem('usuarioLogado') || '{}'
+    );
+    return usuarioLogado.nome || '';
+  }
 
-get isDocente(): boolean {
-  let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-  return perfilLogado === 'Docente';
-}
+  get isAdmin(): boolean {
+    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
+    return perfilLogado === 'Administrador';
+  }
 
-get isAluno(): boolean {
-let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-  return perfilLogado === 'Aluno';
-}
+  get isDocente(): boolean {
+    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
+    return perfilLogado === 'Docente';
+  }
 
+  get isAluno(): boolean {
+    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
+    return perfilLogado === 'Aluno';
+  }
 }

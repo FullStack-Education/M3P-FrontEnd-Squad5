@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
-import { MenuLateralComponent } from './shared/components/menu-lateral/menu-lateral.component';
 import { PaginaLoginService } from './shared/services/pagina-login.service';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
@@ -13,7 +12,6 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
   imports: [
     RouterOutlet,
     CommonModule,
-    MenuLateralComponent,
     ToolbarComponent,
     LoadingBarRouterModule,
   ],

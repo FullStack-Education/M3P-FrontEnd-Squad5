@@ -1,13 +1,23 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { MenuLateralComponent } from '../components/menu-lateral/menu-lateral.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MenuLateralService {
+  // private offcanvasComponent!: MenuLateralComponent;
+  // registerOffcanvas(offcanvasComponent: MenuLateralComponent) {
+  //   this.offcanvasComponent = offcanvasComponent;
+  // }
 
-  constructor() { }
+  // constructor() {}
 
-
+  // abreFechaMenu() {
+  //   console.log('teste');
+  //   if (this.offcanvasComponent) {
+  //     this.offcanvasComponent.open();
+  //   }
+  // }
   getPerfilUsuarioLogado(): string {
     const usuarioLogado = sessionStorage.getItem('usuarioLogado');
     if (usuarioLogado) {

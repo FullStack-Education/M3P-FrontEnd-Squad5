@@ -15,7 +15,7 @@ export class UsuariosService {
 
   private apiUrl = 'http://localhost:8080'; // Update this with your backend URL
 
-  private urlUsuarios = `${this.apiUrl}/usuarios`;
+  private urlUsuarios = `http://localhost:3000/usuarios`;
   private urlLogin = `${this.apiUrl}/login`; // Endpoint for JWT login
 
   constructor(private httpClient: HttpClient) {}

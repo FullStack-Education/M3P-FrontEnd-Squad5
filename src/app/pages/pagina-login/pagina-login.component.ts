@@ -52,6 +52,7 @@ export class PaginaLoginComponent {
             // Navigate to the home page upon successful login
             this.paginaLoginService.login(this.login);
             this.router.navigate(['/home']);
+          
             window.alert('Usuário logado com sucesso!');
           });
         } else {

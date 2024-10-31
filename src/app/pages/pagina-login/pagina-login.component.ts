@@ -10,12 +10,9 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './pagina-login.component.html',
-  styleUrl: './pagina-login.component.css'
+  styleUrls: ['./pagina-login.component.css']
 })
-
-
 export class PaginaLoginComponent {
-
   login = {
     id: '',
     email: '',
@@ -24,53 +21,58 @@ export class PaginaLoginComponent {
     nome: ''
   };
 
-  constructor(private paginaLoginService: PaginaLoginService,private usuariosService: UsuariosService, private router: Router) {}
+  constructor(
+    private paginaLoginService: PaginaLoginService,
+    private usuariosService: UsuariosService,
+    private router: Router
+  ) {}
 
   entrar() {
-     
+    // Call the login method to authenticate and retrieve the JWT token
+    console.log('Login:', this.login);
+    this.usuariosService.login(this.login.email, this.login.senha).subscribe({
+      next: (response) => {
+        // If login is successful and a token is received
+        console.log('respondse:', response);
+        console.log('respondse token:', response.valorJWT);
+        if (response && response.valorJWT) {
+          // Store the token in localStorage
+          console.log('respondse:', response.valorJWT);
+          localStorage.setItem('jwt_token', response.valorJWT);
 
-   this.usuariosService.getUsuarios().subscribe((usuarios) => {
-      const usuario = usuarios.find((usuario) => usuario.email === this.login.email && usuario.senha === this.login.senha);
-      if(usuario) {
-        this.paginaLoginService.getPerfil(usuario.email).subscribe(perfil => {
-          if (perfil) {
+          // Optionally, retrieve user profile information if needed
+          this.paginaLoginService.getPerfil(this.login.email).subscribe((perfil) => {
+            if (perfil) {
+              // Use the profile information if needed
+              this.login.perfil = perfil.perfil;
+              this.login.nome = perfil.nome;
+              this.login.id = perfil.id;
+            }
 
-            this.login.perfil = perfil.perfil;
-            this.login.nome = perfil.nome;
-            this.login.id = perfil.id;
-
-          } else {
-            console.error('Usuário não encontrado');
-          }
-        });
-       
-
- 
-        setTimeout(() => {
-
-          this.paginaLoginService.login(this.login);
-          this.router.navigate(['/home']);
-        }, 300);
-        setTimeout(() => {
-          window.alert('Usuário logado com sucesso!');
-        }, 600);
-        
-      } else {
+            // Navigate to the home page upon successful login
+            this.paginaLoginService.login(this.login);
+            this.router.navigate(['/home']);
+            window.alert('Usuário logado com sucesso!');
+          });
+        } else {
+          window.alert('Login falhou: Token JWT não recebido.');
+        }
+      },
+      error: (err) => {
+        console.error('Erro de autenticação', err);
         window.alert('Usuário e/ou senha incorretos');
-  }
- });
+      }
+    });
   }
 
   criarConta() {
     alert("Funcionalidade em construção");
   }
 
- esqueciSenha(event:Event) {
-    event.preventDefault(); // para não sair da página de login
+  esqueciSenha(event: Event) {
+    event.preventDefault();
     alert("Funcionalidade em construção");
   }
-
-
 }
 
 

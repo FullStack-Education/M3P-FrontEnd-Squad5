@@ -49,6 +49,7 @@ export class MenuLateralComponent {
   }
 
   logout() {
+    this.offcanvasService.dismiss('logout');
     this.paginaLoginService.logout();
     this.router.navigate(['/login']);
   }

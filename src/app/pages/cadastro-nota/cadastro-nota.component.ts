@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,16 +15,17 @@ import { NotaInterface } from '../../shared/interfaces/nota.interface';
 import { DocentesService } from '../../shared/services/docentes.service';
 import { TurmasService } from '../../shared/services/turmas.service';
 import { AlunoService } from '../../shared/services/aluno.service';
+import { ToastService } from 'app/shared/services/toast.service';
+import { ToastType } from 'app/shared/enums/toast-type.enum';
 
 @Component({
   selector: 'app-cadastro-nota',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './cadastro-nota.component.html',
-  styleUrl: './cadastro-nota.component.css'
+  styleUrl: './cadastro-nota.component.css',
 })
 export class CadastroNotaComponent implements OnInit {
-
   notaForm!: FormGroup;
   isEdit = false;
   idNota: string | undefined;
@@ -28,19 +34,25 @@ export class CadastroNotaComponent implements OnInit {
   turmas: any[] = [];
   alunos: any[] = [];
 
+  materias = [
+    'Matemática',
+    'Física',
+    'Química',
+    'História',
+    'Geografia',
+    'Biologia',
+  ];
 
-  materias = ['Matemática', 'Física', 'Química', 'História', 'Geografia', 'Biologia'];
-
-
-
-  constructor(private usuarioService: UsuariosService,
+  constructor(
+    private usuarioService: UsuariosService,
     private activatedRoute: ActivatedRoute,
     private menuLateralService: MenuLateralService,
     private notaService: NotasService,
     private docentesService: DocentesService,
     private turmaService: TurmasService,
-    private alunoService: AlunoService
-  ) { }
+    private alunoService: AlunoService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.idNota = this.activatedRoute.snapshot.params['id'];
@@ -62,7 +74,11 @@ export class CadastroNotaComponent implements OnInit {
       nome: new FormControl('', Validators.required),
       data: new FormControl('', Validators.required),
       aluno: new FormControl('', Validators.required),
-      nota: new FormControl('', [Validators.required, Validators.min(0), Validators.max(10)])
+      nota: new FormControl('', [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(10),
+      ]),
     });
 
     this.turmaService.getTurmas().subscribe((turmas) => {
@@ -82,14 +98,10 @@ export class CadastroNotaComponent implements OnInit {
         this.docentes = docentes;
       });
     }
-
-
-
   }
 
   salvarNota() {
     if (this.notaForm.valid) {
-
       if (this.perfilLogado === 'Docente') {
         this.notaForm.controls['docente'].setValue(this.getNomeUsuarioLogado());
       }
@@ -100,15 +112,25 @@ export class CadastroNotaComponent implements OnInit {
         docente: this.notaForm.controls['docente'].value,
       };
       this.notaService.postNota(novaNota).subscribe((retorno) => {
-        window.alert('Nota criada com sucesso');
+        this.toastService.showToast(
+          ToastType.SUCCESS,
+          'Sucesso!',
+          'Nota criada com sucesso'
+        );
       });
     } else {
-      window.alert('Cheque os campos obrigatórios');
+      this.toastService.showToast(
+        ToastType.ERROR,
+        'Erro!',
+        'Cheque os campos obrigatórios'
+      );
     }
   }
 
   getNomeUsuarioLogado(): string {
-    const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado') || '{}');
+    const usuarioLogado = JSON.parse(
+      sessionStorage.getItem('usuarioLogado') || '{}'
+    );
     return usuarioLogado.nome || '';
   }
 
@@ -130,5 +152,4 @@ export class CadastroNotaComponent implements OnInit {
     let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
     return perfilLogado === 'Aluno';
   }
-
 }

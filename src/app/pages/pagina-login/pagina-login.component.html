@@ -17,7 +17,8 @@
 
         <div class="col-12">
           <div class="d-flex gap-2 justify-content-end">
-            <a href="#" class="link-primary text-decoration-none" (click)="esqueciSenha($event)">Esqueceu sua senha?</a>
+            <a href="#" class="link-primary text-decoration-none" (click)="esqueciSenha()" appPreventDefault>Esqueceu
+              sua senha?</a>
           </div>
         </div>
         <div class="col-12">
@@ -28,7 +29,8 @@
 
         <div class="col-12">
           <p class="m-0 text-secondary text-center">Não tem conta?
-            <a href="" class="link-primary text-decoration-none" (click)="criarConta()">Criar Conta</a>
+            <a href="" class="link-primary text-decoration-none" (click)="criarConta()" appPreventDefault>Criar
+              Conta</a>
           </p>
         </div>
       </form>

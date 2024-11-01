@@ -5,6 +5,7 @@ import { PaginaLoginService } from './shared/services/pagina-login.service';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
+import { ToastComponent } from './shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
     CommonModule,
     ToolbarComponent,
     LoadingBarRouterModule,
+    ToastComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

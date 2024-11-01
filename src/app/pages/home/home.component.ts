@@ -15,11 +15,18 @@ import { NotaInterface } from '../../shared/interfaces/nota.interface';
 import { CursosInterface } from '../../shared/interfaces/cursos.interface';
 import { Router } from '@angular/router';
 import { NgIconComponent } from '@ng-icons/core';
+import { PreventDefaultDirective } from 'app/shared/directives/prevent-default.directive';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, CommonModule, FormsModule, NgIconComponent],
+  imports: [
+    CardComponent,
+    CommonModule,
+    FormsModule,
+    NgIconComponent,
+    PreventDefaultDirective,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -56,7 +63,6 @@ export class HomeComponent implements OnInit {
     this.alunoName = this.getNameUsuarioLogado();
     this.carregarAlunos();
     this.carregarEstatisticas();
-    console.log(this.alunos);
     this.getNotasAluno();
 
     this.materiasService
@@ -77,17 +83,14 @@ export class HomeComponent implements OnInit {
 
   carregarEstatisticas(): void {
     this.alunoService.numeroAlunosMatriculados().subscribe((numeroAlunos) => {
-      console.log(numeroAlunos);
       this.estatisticas.numeroAlunos = numeroAlunos;
     });
     this.docenteService
       .numeroDocentesMatriculados()
       .subscribe((numeroDocentes) => {
-        console.log(numeroDocentes);
         this.estatisticas.numeroDocentes = numeroDocentes;
       });
     this.turmaService.numeroTurmasCadastradas().subscribe((numeroTurmas) => {
-      console.log(numeroTurmas);
       this.estatisticas.numeroTurmas = numeroTurmas;
     });
   }

@@ -18,7 +18,12 @@ import {
   heroDocumentChartBar,
   heroUserCircle,
   heroPencil,
+  heroExclamationTriangle,
+  heroXCircle,
+  heroCheckCircle,
+  heroExclamationCircle,
 } from '@ng-icons/heroicons/outline';
+import { heroXMarkMini } from '@ng-icons/heroicons/mini';
 import { MenuLateralComponent } from './shared/components/menu-lateral/menu-lateral.component';
 
 export const appConfig: ApplicationConfig = {
@@ -39,7 +44,12 @@ export const appConfig: ApplicationConfig = {
       heroPaperClip,
       heroDocumentChartBar,
       heroUserCircle,
-      heroPencil
+      heroPencil,
+      heroExclamationTriangle,
+      heroXCircle,
+      heroCheckCircle,
+      heroExclamationCircle,
+      heroXMarkMini,
     }),
     MenuLateralComponent,
   ],

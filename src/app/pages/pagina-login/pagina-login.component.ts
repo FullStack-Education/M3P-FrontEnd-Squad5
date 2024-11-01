@@ -4,11 +4,14 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { CommonModule } from '@angular/common';
+import { ToastService } from 'app/shared/services/toast.service';
+import { PreventDefaultDirective } from 'app/shared/directives/prevent-default.directive';
+import { ToastType } from 'app/shared/enums/toast-type.enum';
 
 @Component({
   selector: 'app-pagina-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, PreventDefaultDirective],
   templateUrl: './pagina-login.component.html',
   styleUrl: './pagina-login.component.scss',
 })
@@ -24,7 +27,8 @@ export class PaginaLoginComponent {
   constructor(
     private paginaLoginService: PaginaLoginService,
     private usuariosService: UsuariosService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   entrar() {
@@ -49,21 +53,35 @@ export class PaginaLoginComponent {
           this.paginaLoginService.login(this.login);
           this.router.navigate(['/home']);
         }, 300);
-        setTimeout(() => {
-          window.alert('Usuário logado com sucesso!');
-        }, 600);
+
+        this.toastService.showToast(
+          ToastType.SUCCESS,
+          'Sucesso!',
+          'Usuário logado com Sucesso!'
+        );
       } else {
-        window.alert('Usuário e/ou senha incorretos');
+        this.toastService.showToast(
+          ToastType.ERROR,
+          'Erro!',
+          'Usuário e/ou senha incorretos'
+        );
       }
     });
   }
 
   criarConta() {
-    alert('Funcionalidade em construção');
+    this.toastService.showToast(
+      ToastType.INFO,
+      'Informação',
+      'Funcionalidade em construção'
+    );
   }
 
-  esqueciSenha(event: Event) {
-    event.preventDefault(); // para não sair da página de login
-    alert('Funcionalidade em construção');
+  esqueciSenha() {
+    this.toastService.showToast(
+      ToastType.INFO,
+      'Informação',
+      'Funcionalidade em construção'
+    );
   }
 }

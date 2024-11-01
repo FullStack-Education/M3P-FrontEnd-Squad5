@@ -58,57 +58,33 @@
 // }
 
 /* HOME ALUNOS */
+$purple: #5a54cc;
+.aluno-home {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  section {
+    border: 1px #ddd solid;
+    border-top: 10px $purple solid;
+    border-radius: 8px;
+    padding: 20px;
+  }
+}
 
-// .aluno-home {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 20px;
-//   padding: 20px;
-// }
+.nota {
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  h3 {
+    transition: all 0.3s;
+  }
 
-// section {
-//   background: #f5ebff;
-//   border-radius: 8px;
-//   padding: 20px;
-//   width: 25%;
-// }
-
-// h2 {
-//   margin-bottom: 20px;
-//   color: #333;
-// }
-
-// .nota {
-//   color: #333;
-//   margin-bottom: 10px;
-//   cursor: pointer;
-// }
-
-// .nota p {
-//   margin: 0px;
-// }
-
-// .nota h3 {
-//   margin: 0px;
-//   color: black;
-//   font-weight: bold;
-// }
-
-// .materia,
-// .curso {
-//   background: #fff;
-//   padding: 10px;
-//   margin-bottom: 10px;
-//   border-radius: 4px;
-// }
-
-// h3 {
-//   margin: 0 0 10px;
-// }
-
-// p {
-//   margin: 0;
-// }
+  &:hover {
+    h3 {
+      color: $purple;
+    }
+  }
+}
 
 .card {
   min-width: 350px;

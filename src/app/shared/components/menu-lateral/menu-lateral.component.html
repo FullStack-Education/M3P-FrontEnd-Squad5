@@ -21,7 +21,7 @@
       </li>
 
 
-      <li>
+      <li *ngIf="isAdmin || isDocente">
         <a href="#" class="btn-toggle nav-link link-body-emphasis d-flex align-items-center"
           [ngClass]="!isCadastroCollapsed ? 'collapsed' : ''" (click)="isCadastroCollapsed = !isCadastroCollapsed"
           [attr.aria-expanded]="!isCadastroCollapsed" appPreventDefault>

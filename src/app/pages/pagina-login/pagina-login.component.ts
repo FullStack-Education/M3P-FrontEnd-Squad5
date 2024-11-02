@@ -10,7 +10,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './pagina-login.component.html',
-  styleUrls: ['./pagina-login.component.css']
+  styleUrl: './pagina-login.component.scss',
+
 })
 export class PaginaLoginComponent {
   login = {
@@ -18,7 +19,7 @@ export class PaginaLoginComponent {
     email: '',
     senha: '',
     perfil: '',
-    nome: ''
+    nome: '',
   };
 
   constructor(
@@ -28,6 +29,7 @@ export class PaginaLoginComponent {
   ) {}
 
   entrar() {
+
     // Call the login method to authenticate and retrieve the JWT token
     console.log('Login:', this.login);
     this.usuariosService.login(this.login.email, this.login.senha).subscribe({
@@ -61,19 +63,20 @@ export class PaginaLoginComponent {
       },
       error: (err) => {
         console.error('Erro de autenticação', err);
+
         window.alert('Usuário e/ou senha incorretos');
       }
     });
   }
 
   criarConta() {
-    alert("Funcionalidade em construção");
+    alert('Funcionalidade em construção');
   }
 
   esqueciSenha(event: Event) {
+
     event.preventDefault();
     alert("Funcionalidade em construção");
+
   }
 }
-
-

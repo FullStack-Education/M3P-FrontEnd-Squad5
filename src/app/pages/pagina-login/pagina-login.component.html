@@ -1,27 +1,38 @@
 <body>
-  
-<div class="login">
-  <h2>Login</h2>
-    <form (ngSubmit)="entrar()">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" [(ngModel)]="login.email" name="email" required />
+  <div class="card border border-light-subtle rounded-4 shadow-sm">
+    <div class="card-body p-5">
+      <h2 class="text-primary">Login</h2>
+      <form (ngSubmit)="entrar()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="login.email" placeholder="name@example.com"
+            name="email" required />
         </div>
-    
-        <div class="form-group">
-          <label for="password">Senha</label>
-          <input type="password" id="password" [(ngModel)]="login.senha" name="password" required />
-        </div>
-        <a href="#" (click)="esqueciSenha($event)">Esqueci minha senha</a>
-    
-        <button type="submit" class="enter-button">Entrar</button>
 
-        <div class="create-account">
-        <p>Não tem conta?</p>
-        <button type="button" class="account-button" (click)="criarConta()">Criar Conta</button>
-      </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="password" [(ngModel)]="login.senha" name="password"
+            required />
+        </div>
+
+        <div class="col-12">
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="#" class="link-primary text-decoration-none" (click)="esqueciSenha($event)">Esqueceu sua senha?</a>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="d-grid my-3">
+            <button class="btn btn-primary btn-lg" type="submit">Entrar</button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <p class="m-0 text-secondary text-center">Não tem conta?
+            <a href="" class="link-primary text-decoration-none" (click)="criarConta()">Criar Conta</a>
+          </p>
+        </div>
       </form>
+    </div>
   </div>
-    <img src="Learning-cuate_amarela.png" >
+  <img class="d-none d-md-block" src="Learning-cuate_amarela.png">
 </body>
-  

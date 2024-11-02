@@ -1,15 +1,90 @@
-<nav class="menu-lateral">
-    <button (click)="abreFechaMenu()">&equiv;</button> 
-    <div  *ngIf="isMenuOpen">
-      <ul>
-        <li><button (click)="navegarPara('/home')">Início</button></li>
-        <li *ngIf="isAdmin"><button (click)="navegarPara('/cadastro-docente')">Cadastro de Docente</button></li>
-        <li *ngIf="isAdmin"><button (click)="navegarPara('/cadastro-aluno')">Cadastro de Aluno</button></li>
-        <li *ngIf="isAdmin || isDocente"><button (click)="navegarPara('/cadastro-turma')">Cadastro de Turma</button></li>
-        <li *ngIf="isAdmin || isDocente"><button (click)="navegarPara('/cadastro-nota')">Cadastro de Nota</button></li>
-        <li *ngIf="isAdmin"><button (click)="navegarPara('/listagem-docentes')">Listagem de Docentes</button></li>
-        <li *ngIf="isAluno"><button (click)="navegarPara('/notas')">Notas</button></li>
-        <li><button (click)="logout()">Sair</button></li>
-      </ul>
+<ng-template #offcanvas let-offcanvas>
+  <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvas-basic-title">Menu</h5>
+      <!-- <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button> -->
+      <a href="#" (click)="$event.preventDefault(); offcanvas.dismiss('Cross click')"
+        class="d-flex align-items-end mb-3 mb-md-0 ms-md-auto link-body-emphasis text-decoration-none">
+        <ng-icon [size]="'32'" [color]="'#5a54cc'" name="heroXMark"></ng-icon>
+      </a>
+
     </div>
-  </nav>
+    <hr>
+
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li>
+        <a href="#" (click)="navegarPara('/home')" class="nav-link link-body-emphasis d-flex align-items-center"
+          appPreventDefault>
+          <ng-icon [class]="'bi pe-none me-2'" [size]="'24'" name="heroHome"></ng-icon>
+          Início
+        </a>
+      </li>
+
+
+      <li>
+        <a href="#" class="btn-toggle nav-link link-body-emphasis d-flex align-items-center"
+          [ngClass]="!isCadastroCollapsed ? 'collapsed' : ''" (click)="isCadastroCollapsed = !isCadastroCollapsed"
+          [attr.aria-expanded]="!isCadastroCollapsed" appPreventDefault>
+          <ng-icon [class]="'bi pe-none me-2'" [size]="'24'" name="heroChevronRight"></ng-icon>
+          Cadastros
+        </a>
+
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCadastroCollapsed">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li *ngIf="isAdmin">
+              <a href="#" class="d-flex align-items-center nav-link link-body-emphasis text-decoration-none rounded"
+                (click)="navegarPara('/cadastro-docente')" appPreventDefault>
+                <ng-icon [class]="'bi pe-none me-2'" [size]="'18'" name="heroAcademicCap"></ng-icon>
+                Docente
+              </a>
+            </li>
+            <li *ngIf="isAdmin">
+              <a href="#" class=" d-flex align-items-center nav-link link-body-emphasis text-decoration-none rounded"
+                (click)="navegarPara('/cadastro-aluno')" appPreventDefault>
+                <ng-icon [class]="'bi pe-none me-2'" [size]="'18'" name="heroIdentification"></ng-icon>
+                Aluno</a>
+            </li>
+            <li *ngIf="isAdmin || isDocente">
+              <a href="#" class=" d-flex align-items-center nav-link link-body-emphasis text-decoration-none rounded"
+                (click)="navegarPara('/cadastro-turma')" appPreventDefault>
+                <ng-icon [class]="'bi pe-none me-2'" [size]="'18'" name="heroPaperClip"></ng-icon>
+                Turma</a>
+            </li>
+            <li *ngIf="isAdmin || isDocente">
+              <a href="#" class=" d-flex align-items-center nav-link link-body-emphasis text-decoration-none rounded"
+                (click)="navegarPara('/cadastro-nota')" appPreventDefault>
+                <ng-icon [class]="'bi pe-none me-2'" [size]="'18'" name="heroDocumentChartBar"></ng-icon>
+                Nota</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li *ngIf="isAdmin">
+        <a href="#" class="d-flex align-items-center nav-link link-body-emphasis "
+          (click)="navegarPara('/listagem-docentes')" appPreventDefault>
+          <ng-icon [class]="'bi pe-none me-2'" [size]="'24'" name="heroUserGroup"></ng-icon>
+          Listagem de Docentes
+        </a>
+      </li>
+      <li *ngIf="isAluno">
+        <a href="#" class="d-flex align-items-center nav-link link-body-emphasis " (click)="navegarPara('/notas')"
+          appPreventDefault>
+          <ng-icon [class]="'bi pe-none me-2'" [size]="'24'" name="heroChartBar"></ng-icon>
+          Notas
+        </a>
+      </li>
+
+    </ul>
+    <hr>
+    <div>
+      <a href="#"
+        class="d-flex align-items-center justify-content-between nav-link link-body-emphasis text-decoration-none"
+        (click)="logout()" appPreventDefault>
+        <span>Sair</span>
+        <ng-icon [size]="'24'" name="heroArrowRightStartOnRectangle"></ng-icon>
+      </a>
+    </div>
+  </div>
+
+</ng-template>

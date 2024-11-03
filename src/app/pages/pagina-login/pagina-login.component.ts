@@ -32,40 +32,56 @@ export class PaginaLoginComponent {
   ) {}
 
   entrar() {
-    this.usuariosService.getUsuarios().subscribe((usuarios) => {
-      const usuario = usuarios.find(
-        (usuario) =>
-          usuario.email === this.login.email &&
-          usuario.senha === this.login.senha
-      );
-      if (usuario) {
-        this.paginaLoginService.getPerfil(usuario.email).subscribe((perfil) => {
-          if (perfil) {
-            this.login.perfil = perfil.perfil;
-            this.login.nome = perfil.nome;
-            this.login.id = perfil.id;
-          } else {
-            console.error('Usuário não encontrado');
-          }
-        });
+    // Call the login method to authenticate and retrieve the JWT token
+    console.log('Login:', this.login);
+    this.usuariosService.login(this.login.email, this.login.senha).subscribe({
+      next: (response) => {
+        // If login is successful and a token is received
+        console.log('respondse:', response);
+        console.log('respondse token:', response.valorJWT);
+        if (response && response.valorJWT) {
+          // Store the token in localStorage
+          console.log('respondse:', response.valorJWT);
+          localStorage.setItem('jwt_token', response.valorJWT);
 
-        setTimeout(() => {
-          this.paginaLoginService.login(this.login);
-          this.router.navigate(['/home']);
-        }, 300);
+          // Optionally, retrieve user profile information if needed
+          this.paginaLoginService
+            .getPerfil(this.login.email)
+            .subscribe((perfil) => {
+              if (perfil) {
+                // Use the profile information if needed
+                this.login.perfil = perfil.perfil;
+                this.login.nome = perfil.nome;
+                this.login.id = perfil.id;
+              }
 
-        this.toastService.showToast(
-          ToastType.SUCCESS,
-          'Sucesso!',
-          'Usuário logado com Sucesso!'
-        );
-      } else {
+              // Navigate to the home page upon successful login
+              this.paginaLoginService.login(this.login);
+              this.router.navigate(['/home']);
+
+              this.toastService.showToast(
+                ToastType.SUCCESS,
+                'Sucesso!',
+                'Usuário logado com Sucesso!'
+              );
+            });
+        } else {
+          this.toastService.showToast(
+            ToastType.ERROR,
+            'Falha!',
+            'Token JWT não recebido.'
+          );
+        }
+      },
+      error: (err) => {
+        console.error('Erro de autenticação', err);
+
         this.toastService.showToast(
           ToastType.ERROR,
           'Erro!',
           'Usuário e/ou senha incorretos'
         );
-      }
+      },
     });
   }
 

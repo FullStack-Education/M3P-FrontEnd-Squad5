@@ -3,33 +3,52 @@ import { Injectable } from '@angular/core';
 import { UsuarioInterface } from '../interfaces/usuario.interface';
 import { Observable } from 'rxjs';
 
+interface LoginResponse {
+  valorJWT: string;
+  tempoExpiracao: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
 
-  private url = 'http://localhost:3000/usuarios';
+  private apiUrl = 'http://localhost:8080'; // Update this with your backend URL
+
+  private urlUsuarios = `http://localhost:3000/usuarios`;
+  private urlLogin = `${this.apiUrl}/login`; // Endpoint for JWT login
 
   constructor(private httpClient: HttpClient) {}
 
-  getUsuarios() {
-    return this.httpClient.get<Array<UsuarioInterface>>(this.url);
+  // Existing method to get a list of users
+  getUsuarios(): Observable<Array<UsuarioInterface>> {
+    return this.httpClient.get<Array<UsuarioInterface>>(this.urlUsuarios);
   }
 
+  // Existing method to get a single user by ID
   getUsuario(id: string): Observable<UsuarioInterface> {
-    const urlCompleta = `${this.url}/${id}`; // Constrói a URL completa para a requisição
-    return this.httpClient.get<UsuarioInterface>(urlCompleta); // Faz a requisição GET e retorna um Observable
+    const urlCompleta = `${this.urlUsuarios}/${id}`;
+    return this.httpClient.get<UsuarioInterface>(urlCompleta);
   }
 
-  postUsuario(usuario: UsuarioInterface) {
-    return this.httpClient.post<any>(this.url, usuario);
+  // Existing method to create a new user
+  postUsuario(usuario: UsuarioInterface): Observable<any> {
+    return this.httpClient.post<any>(this.urlUsuarios, usuario);
   }
 
-  putUsuario(usuario: UsuarioInterface) {
-    return this.httpClient.put<any>(this.url + `/${usuario.id}`, usuario);
+  // Existing method to update a user
+  putUsuario(usuario: UsuarioInterface): Observable<any> {
+    return this.httpClient.put<any>(`${this.urlUsuarios}/${usuario.id}`, usuario);
   }
 
-  deleteUsuario(id: string) {
-    return this.httpClient.delete<any>(this.url + `/${id}`);
+  // Existing method to delete a user
+  deleteUsuario(id: string): Observable<any> {
+    return this.httpClient.delete<any>(`${this.urlUsuarios}/${id}`);
+  }
+
+  // New method to authenticate user and retrieve JWT valorJWT
+  login(email: string, senha: string): Observable<{ valorJWT: string }> {
+    // Send login credentials to the backend login endpoint
+    return this.httpClient.post<{ valorJWT: string }>(this.urlLogin, { login: email, senha });
   }
 }

@@ -15,6 +15,7 @@ import { TurmasService } from '../../shared/services/turmas.service';
 import { NotasService } from '../../shared/services/notas.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { AlunoService } from 'app/shared/services/aluno.service';
 
 @Component({
   selector: 'app-cadastro-aluno',
@@ -39,7 +40,8 @@ export class CadastroAlunoComponent implements OnInit {
     private menuLateralService: MenuLateralService,
     private turmasService: TurmasService,
     private notasService: NotasService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private alunoService: AlunoService
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class CadastroAlunoComponent implements OnInit {
 
     if (this.idUsuario) {
       this.isEdit = true;
-      this.usuarioService.getUsuario(this.idUsuario).subscribe((usuario) => {
+      this.alunoService.getAluno(this.idUsuario).subscribe((usuario) => {
         if (usuario) {
           this.alunoForm.patchValue({
             nome: usuario.nome || '',

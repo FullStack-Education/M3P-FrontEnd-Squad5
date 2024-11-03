@@ -44,6 +44,59 @@
       "perfil": "Docente",
       "idade": 32,
       "telefone": "(11) 9 9999-9999"
+    },
+    {
+      "id": "6",
+      "nome": "Charles Francis Xavier",
+      "email": "admin",
+      "senha": "1234",
+      "perfil": "Administrador",
+      "idade": 68,
+      "telefone": "(11) 9 9999-9999"
+    },
+    {
+      "id": "7",
+      "nome": "James Logan Howlett",
+      "email": "professor",
+      "senha": "pass2",
+      "perfil": "Docente",
+      "idade": 101,
+      "telefone": "(11) 9 9999-9999"
+    },
+    {
+      "id": "8",
+      "nome": "Jean Elaine Grey",
+      "email": "aluno",
+      "senha": "pass3",
+      "perfil": "Aluno",
+      "idade": 28,
+      "telefone": "(11) 9 9999-9999"
+    },
+    {
+      "id": "5l005uz6c",
+      "nome": "Pessoa da Silva",
+      "genero": "Masculino",
+      "dataNascimento": "2024-10-03",
+      "cpf": "111.111.111-11",
+      "rg": "1111111-SSP",
+      "estadoCivil": "Casado(a)",
+      "telefone": "11 99999-9999",
+      "email": "teste@gmail.com",
+      "senha": "12341111",
+      "naturalidade": "UmLugarQualquer",
+      "cep": "88040400",
+      "cidade": "Florianópolis",
+      "estado": "SC",
+      "logradouro": "Avenida Desembargador Vítor Lima",
+      "numero": "410",
+      "complemento": "",
+      "bairro": "Trindade",
+      "pontoReferencia": "",
+      "turmas": [
+        "Biologia Molecular e Genética"
+      ],
+      "perfil": "Aluno",
+      "idade": 0
     }
   ],
   "turmas": [
@@ -86,6 +139,14 @@
       "dataTermino": "2024-10-01",
       "horario": "17:00 - 19:00",
       "professor": "Ororo Munroe"
+    },
+    {
+      "id": "cn5949mas",
+      "nome": "Turma 21",
+      "dataInicio": "2024-10-16",
+      "dataTermino": "2024-10-16",
+      "horario": "12:13",
+      "professor": "James Logan Howlett"
     }
   ],
   "materias": [

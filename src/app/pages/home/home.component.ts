@@ -75,14 +75,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  carregarEstatisticas(): void {
-    this.alunoService.numeroAlunosMatriculados().subscribe((numeroAlunos) => {
-      console.log(numeroAlunos);
-      this.estatisticas.numeroAlunos = numeroAlunos;
-    });
-    this.docenteService
-      .numeroDocentesMatriculados()
-      .subscribe((numeroDocentes) => {
+
+  carregarEstatisticas(): void{
+      this.alunoService.numeroAlunosMatriculados().subscribe(numeroAlunos => {
+        console.log(numeroAlunos);
+        this.estatisticas.numeroAlunos = numeroAlunos;
+        localStorage.getItem('jwt_token')
+      });
+      this.docenteService.numeroDocentesMatriculados().subscribe(numeroDocentes => {
+
         console.log(numeroDocentes);
         this.estatisticas.numeroDocentes = numeroDocentes;
       });

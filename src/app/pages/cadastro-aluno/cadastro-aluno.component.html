@@ -1,6 +1,13 @@
 <div class="cadastro-aluno" *ngIf="isAdmin">
     <h1>Cadastrar novo aluno</h1>
-    <form [formGroup]="alunoForm" class="container-grid" (ngSubmit)="salvarAluno()">
+    <form [formGroup]="alunoForm" (ngSubmit)="salvarAluno()">
+      <div class="botoes">
+        <button id="save-bt" type="submit" [disabled]="isEdit">Salvar</button>
+        <button id="edit-bt" type="button" (click)="editarAluno()" [disabled]="idUsuario == undefined">Editar</button>
+        <button id="delete-bt" type="button" (click)="deletarAluno()" [disabled]="idUsuario == undefined">Deletar</button>
+      </div>
+
+    <div class="container-grid" >
     <div class="col-3">
         <label for="nome">Nome Completo:*</label>
         <input id="nome" formControlName="nome" type="text">
@@ -137,11 +144,7 @@
                 alunoForm.controls['turmas'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div> 
 
-      <div class="botoes">
-        <button type="submit" [disabled]="isEdit">Salvar</button>
-        <button type="button" (click)="editarAluno()" [disabled]="!isEdit">Editar</button>
-        <button type="button" (click)="deletarAluno()"[disabled]="!isEdit">Deletar</button>
-      </div>
+    </div>  
     </form>
   </div>
 

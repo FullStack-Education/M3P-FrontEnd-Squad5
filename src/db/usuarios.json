@@ -97,6 +97,26 @@
       ],
       "perfil": "Aluno",
       "idade": 0
+    },
+    {
+      "id": "14",
+      "nome": "Pessoa da Silva",
+      "genero": "Masculino",
+      "dataNascimento": "2024-10-03",
+      "cpf": "111.111.111-11",
+      "rg": "1111111-SSP",
+      "estadoCivil": "Casado(a)",
+      "telefone": "11 99999-9999",
+      "email": "blabla",
+      "senha": "12341111",
+      "naturalidade": "UmLugarQualquer",
+      "cep": "88040400",
+      "cidade": "Florianópolis",
+      "estado": "SC",
+      "logradouro": "Avenida Desembargador Vítor Lima",
+      "numero": "410",
+      "perfil": "Docente",
+      "idade": 0
     }
   ],
   "turmas": [

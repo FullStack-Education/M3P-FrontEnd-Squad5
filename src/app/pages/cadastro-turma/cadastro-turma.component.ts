@@ -15,6 +15,7 @@ import { DocentesService } from '../../shared/services/docentes.service';
 import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { CursosExtraService } from 'app/shared/services/cursos-extra.service';
 
 @Component({
   selector: 'app-cadastro-turma',
@@ -29,6 +30,7 @@ export class CadastroTurmaComponent implements OnInit {
   idTurma: string | undefined;
   perfilLogado: string = '';
   docentes: any[] = [];
+  cursos: any[] = [];
 
   constructor(
     private viaCepService: ViaCepService,
@@ -36,12 +38,16 @@ export class CadastroTurmaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private menuLateralService: MenuLateralService,
     private docentesService: DocentesService,
+    private cursosService: CursosExtraService,
     private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
     this.idTurma = this.activatedRoute.snapshot.params['id'];
     this.perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
+    this.cursosService.getCursosExtras().subscribe((cursos) => {
+      this.cursos = cursos;
+    });
 
     if (this.idTurma) {
       this.isEdit = true;
@@ -62,6 +68,7 @@ export class CadastroTurmaComponent implements OnInit {
       dataTermino: new FormControl('', Validators.required),
       horario: new FormControl('', Validators.required),
       docente: new FormControl('', Validators.required),
+      curso: new FormControl('', Validators.required),
     });
 
     if (this.perfilLogado === 'Docente') {
@@ -77,18 +84,21 @@ export class CadastroTurmaComponent implements OnInit {
 
   salvarTurma() {
     if (this.turmaForm.valid) {
+
       if (this.perfilLogado === 'Docente') {
         this.turmaForm.controls['docente'].setValue(
           this.getNomeUsuarioLogado()
         );
       }
-
+      
       const novaTurma: TurmaInterface = {
         ...this.turmaForm.value,
         id: this.idTurma ? this.idTurma : this.gerarId(),
         professor: this.turmaForm.controls['docente'].value,
       };
+      
       this.turmaService.postTurma(novaTurma).subscribe((retorno) => {
+        console.log('Passou');
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',

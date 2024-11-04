@@ -36,9 +36,9 @@ export class NotasAlunosComponent implements OnInit {
     this.perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
     this.getNotasAluno();
 
-    this.turmaService.getTurmas().subscribe((turmas) => {
-      this.turmas = turmas;
-    });
+    // this.turmaService.getTurmas().subscribe((turmas) => {
+    //   this.turmas = turmas;
+    // });
   }
 
   getNotasAluno() {

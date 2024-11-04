@@ -84,7 +84,7 @@ E entrar no endereço informado. No meu caso é: http://localhost:4200/
 ## Informações finais
 Este projeto foi desenvolvido para o curso FullStack [Education] para compor a nota do módulo.
 
-O projeto está todo contido no repositório do gitHub: <https://github.com/CherylHenkels/projeto2-labPCP.git](https://github.com/FullStack-Education/M3P-FrontEnd-Squad5.git>
+O projeto está todo contido no repositório do gitHub: <https://github.com/FullStack-Education/M3P-FrontEnd-Squad5.git>
 
 A organização das tarefas foi feita no Trello e pode ser conferida no quadro (board):
 <https://trello.com/b/iAsC098Y/m3p-frontend-squad-5>

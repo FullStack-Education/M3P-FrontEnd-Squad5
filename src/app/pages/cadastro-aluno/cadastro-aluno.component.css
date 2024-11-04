@@ -80,3 +80,9 @@
 .col-3{
     grid-column: span 3;
 }
+
+.label-error{
+  margin-bottom: 5px;
+  color: red;
+  font-size: 10px;
+}

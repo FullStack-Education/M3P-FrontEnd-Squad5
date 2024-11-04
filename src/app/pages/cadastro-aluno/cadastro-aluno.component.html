@@ -2,86 +2,139 @@
     <h1>Cadastrar novo aluno</h1>
     <form [formGroup]="alunoForm" class="container-grid" (ngSubmit)="salvarAluno()">
     <div class="col-3">
-        <label for="nome">Nome Completo:</label>
+        <label for="nome">Nome Completo:*</label>
         <input id="nome" formControlName="nome" type="text">
+        <span *ngIf="(alunoForm.controls['nome'].dirty || alunoForm.controls['nome'].touched) &&
+                alunoForm.controls['nome'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+        <span *ngIf="(alunoForm.controls['nome'].dirty || alunoForm.controls['nome'].touched) &&
+                alunoForm.controls['nome'].errors?.['minlength']" class="label-error">Minimo 8 caracteres*</span>
+        <span *ngIf="(alunoForm.controls['nome'].dirty || alunoForm.controls['nome'].touched) &&
+                alunoForm.controls['nome'].errors?.['maxlength']" class="label-error">Máximo 64 caracteres*</span>
       </div>
       <div>
-       <label for="genero">Gênero:</label>
+       <label for="genero">Gênero:*</label>
         <select id="genero" formControlName="genero">
           <option *ngFor="let genero of generos">{{ genero }}</option>
         </select>
+        <span *ngIf="(alunoForm.controls['genero'].dirty || alunoForm.controls['genero'].touched) &&
+                alunoForm.controls['genero'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div> 
       <div>
-        <label for="dataNascimento">Data de Nascimento:</label>
+        <label for="dataNascimento">Data de Nascimento:*</label>
         <input id="dataNascimento" formControlName="dataNascimento" type="date">
+        <span *ngIf="(alunoForm.controls['dataNascimento'].dirty || alunoForm.controls['dataNascimento'].touched) &&
+                alunoForm.controls['dataNascimento'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div> 
        <div>
-        <label for="cpf">CPF:</label>
+        <label for="cpf">CPF:*</label>
         <input id="cpf" formControlName="cpf" type="text">
+        <span *ngIf="(alunoForm.controls['cpf'].dirty || alunoForm.controls['cpf'].touched) &&
+                alunoForm.controls['cpf'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+        <span *ngIf="(alunoForm.controls['cpf'].dirty || alunoForm.controls['cpf'].touched) &&
+                alunoForm.controls['cpf'].errors?.['pattern']" class="label-error">Favor preencher CPF válido*</span>
       </div>
       <div>
-        <label for="rg">RG:</label>
+        <label for="rg">RG:*</label>
         <input id="rg" formControlName="rg" type="text">
+        <span *ngIf="(alunoForm.controls['rg'].dirty || alunoForm.controls['rg'].touched) &&
+                alunoForm.controls['rg'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+        <span *ngIf="(alunoForm.controls['rg'].dirty || alunoForm.controls['rg'].touched) &&
+                alunoForm.controls['rg'].errors?.['maxlength']" class="label-error">Máximo 20 caracteres*</span>
       </div>
       <div >
-        <label for="estadoCivil">Estado Civil:</label>
+        <label for="estadoCivil">Estado Civil:*</label>
         <select id="estadoCivil" formControlName="estadoCivil">
           <option *ngFor="let estadoCivil of estadosCivis">{{ estadoCivil }}</option>
+          <span *ngIf="(alunoForm.controls['estadoCivil'].dirty || alunoForm.controls['estadoCivil'].touched) &&
+                alunoForm.controls['estadoCivil'].errors?.['required']" class="label-error">Campo obrigatório*</span>
         </select>
       </div>
       <div>
-        <label for="telefone">Telefone:</label>
+        <label for="telefone">Telefone:*</label>
         <input id="telefone" formControlName="telefone" type="text">
+        <span *ngIf="(alunoForm.controls['telefone'].dirty || alunoForm.controls['telefone'].touched) &&
+                alunoForm.controls['telefone'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+         <span *ngIf="(alunoForm.controls['telefone'].dirty || alunoForm.controls['telefone'].touched) &&
+                alunoForm.controls['telefone'].errors?.['pattern']" class="label-error">Favor preencher telefone válido*</span>
       </div>
       <div>
-        <label for="email">E-mail:</label>
+        <label for="email">E-mail:* </label>
         <input id="email" formControlName="email" type="email">
+        <span *ngIf="(alunoForm.controls['email'].dirty || alunoForm.controls['email'].touched) &&
+                alunoForm.controls['email'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+        <span *ngIf="(alunoForm.controls['email'].dirty || alunoForm.controls['email'].touched) &&
+                alunoForm.controls['email'].errors?.['email']" class="label-error">Favor preencher e-mail válido*</span>
+        
       </div>
       <div>
-        <label for="senha">Senha:</label>
+        <label for="senha">Senha:*</label>
         <input id="senha" formControlName="senha" type="password">
+        <span *ngIf="(alunoForm.controls['senha'].dirty || alunoForm.controls['senha'].touched) &&
+                alunoForm.controls['senha'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+         <span *ngIf="(alunoForm.controls['senha'].dirty || alunoForm.controls['senha'].touched) &&
+                alunoForm.controls['senha'].errors?.['minlength']" class="label-error">Minimo 8 caracteres*</span>
       </div>
       <div>
-        <label for="naturalidade">Naturalidade:</label>
+        <label for="naturalidade">Naturalidade:*</label>
         <input id="naturalidade" formControlName="naturalidade" type="text">
+        <span *ngIf="(alunoForm.controls['naturalidade'].dirty || alunoForm.controls['naturalidade'].touched) &&
+                alunoForm.controls['naturalidade'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+        <span *ngIf="(alunoForm.controls['naturalidade'].dirty || alunoForm.controls['naturalidade'].touched) &&
+                alunoForm.controls['naturalidade'].errors?.['minlength']" class="label-error">Minimo 8 caracteres*</span>
+        <span *ngIf="(alunoForm.controls['naturalidade'].dirty || alunoForm.controls['naturalidade'].touched) &&
+                alunoForm.controls['naturalidade'].errors?.['maxlength']" class="label-error">Máximo 64 caracteres*</span>
       </div>
       <div >
-        <label for="cep">CEP:</label>
+        <label for="cep">CEP:*</label>
         <input id="cep" formControlName="cep" type="text" (blur)="buscarCep()">
+        <span *ngIf="(alunoForm.controls['cep'].dirty || alunoForm.controls['cep'].touched) &&
+                alunoForm.controls['cep'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div>
       <div >
-        <label for="cidade">Cidade:</label>
+        <label for="cidade">Cidade:*</label>
         <input id="cidade" formControlName="cidade" type="text">
+        <span *ngIf="(alunoForm.controls['cidade'].dirty || alunoForm.controls['cidade'].touched) &&
+                alunoForm.controls['cidade'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div>
       <div >
-        <label for="estado">Estado:</label>
+        <label for="estado">Estado:*</label>
         <input id="estado" formControlName="estado" type="text" >
+        <span *ngIf="(alunoForm.controls['estado'].dirty || alunoForm.controls['estado'].touched) &&
+                alunoForm.controls['estado'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div>
       <div class="col-2">
-        <label for="logradouro">Logradouro:</label>
+        <label for="logradouro">Logradouro:*</label>
         <input id="logradouro" formControlName="logradouro" type="text">
+        <span *ngIf="(alunoForm.controls['logradouro'].dirty || alunoForm.controls['logradouro'].touched) &&
+                alunoForm.controls['logradouro'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div>
       <div>
-        <label for="numero">Número:</label>
+        <label for="numero">Número:*</label>
         <input id="numero" formControlName="numero" type="text">
+        <span *ngIf="(alunoForm.controls['numero'].dirty || alunoForm.controls['numero'].touched) &&
+                alunoForm.controls['numero'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div>
       <div>
         <label for="complemento">Complemento:</label>
         <input id="complemento" formControlName="complemento" type="text">
       </div>
       <div>
-        <label for="bairro">Bairro:</label>
+        <label for="bairro">Bairro:*</label>
         <input id="bairro" formControlName="bairro" type="text">
+        <span *ngIf="(alunoForm.controls['bairro'].dirty || alunoForm.controls['bairro'].touched) &&
+                alunoForm.controls['bairro'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div>
       <div>
         <label for="pontoReferencia">Ponto de Referência:</label>
         <input id="pontoReferencia" formControlName="pontoReferencia" type="text">
       </div>
       <div class="col-2">
-        <label for="turmas">Turmas:</label>
+        <label for="turmas">Turmas:*</label>
         <select id="turmas" formControlName="turmas" multiple>
           <option *ngFor="let turma of turmas">{{ turma.nome }}</option>
         </select>
+        <span *ngIf="(alunoForm.controls['turmas'].dirty || alunoForm.controls['turmas'].touched) &&
+                alunoForm.controls['turmas'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div> 
 
       <div class="botoes">

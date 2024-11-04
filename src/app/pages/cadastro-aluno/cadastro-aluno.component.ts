@@ -94,7 +94,7 @@ export class CadastroAlunoComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^\(\d{2}\) \d \d{4}-\d{4}$/),
       ]),
-      email: new FormControl('', [Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [
         Validators.required,
         Validators.minLength(8),

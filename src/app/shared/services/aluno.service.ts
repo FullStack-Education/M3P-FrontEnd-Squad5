@@ -36,6 +36,10 @@ export class AlunoService {
     return this.httpClient.post<any>(this.apiUrl, aluno,  {headers: this.getHeaders()});
   }
 
+  putAluno(aluno: AlunoInterface): Observable<any> {
+    return this.httpClient.put<any>(`${this.apiUrl}/${aluno.id}`, aluno, {headers: this.getHeaders()});
+  }
+
 
   numeroAlunosMatriculados(): Observable<number> {
     return this.getAlunosMatriculados().pipe(

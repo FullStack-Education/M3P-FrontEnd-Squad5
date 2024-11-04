@@ -175,8 +175,9 @@ export class CadastroAlunoComponent implements OnInit {
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
+        turma: parseInt(this.alunoForm.value.turma[0])
       };
-      this.usuarioService.putUsuario(alunoEditado).subscribe(() => {
+      this.alunoService.putAluno(alunoEditado).subscribe(() => {
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',

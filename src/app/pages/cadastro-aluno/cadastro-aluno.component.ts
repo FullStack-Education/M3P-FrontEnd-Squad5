@@ -16,6 +16,7 @@ import { NotasService } from '../../shared/services/notas.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
 import { AlunoService } from 'app/shared/services/aluno.service';
+import { AlunoInterface } from 'app/shared/interfaces/alunos.interface';
 
 @Component({
   selector: 'app-cadastro-aluno',
@@ -28,7 +29,7 @@ export class CadastroAlunoComponent implements OnInit {
   alunoForm!: FormGroup;
   turmas: any[] = [];
   isEdit = false;
-  idUsuario: string | undefined;
+  idAluno: string | undefined;
 
   generos = ['', 'Masculino', 'Feminino', 'Outro'];
   estadosCivis = ['', 'Solteiro(a)', 'Casado(a)', 'Divorciado(a)', 'Viúvo(a)'];
@@ -45,11 +46,11 @@ export class CadastroAlunoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.idUsuario = this.activatedRoute.snapshot.params['id'];
+    this.idAluno = this.activatedRoute.snapshot.params['id'];
 
-    if (this.idUsuario) {
+    if (this.idAluno) {
       this.isEdit = true;
-      this.alunoService.getAluno(this.idUsuario).subscribe((usuario) => {
+      this.alunoService.getAluno(this.idAluno).subscribe((usuario) => {
         if (usuario) {
           this.alunoForm.patchValue({
             nome: usuario.nome || '',
@@ -70,7 +71,7 @@ export class CadastroAlunoComponent implements OnInit {
             complemento: usuario.complemento || '',
             bairro: usuario.bairro || '',
             pontoReferencia: usuario.pontoReferencia || '',
-            turmas: usuario.turmas || [],
+            turma: usuario.turma || [],
           });
         }
       });
@@ -92,7 +93,7 @@ export class CadastroAlunoComponent implements OnInit {
       estadoCivil: new FormControl('', Validators.required),
       telefone: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\(\d{2}\) \d \d{4}-\d{4}$/),
+        Validators.pattern(/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/),
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [
@@ -112,7 +113,7 @@ export class CadastroAlunoComponent implements OnInit {
       complemento: new FormControl(''),
       bairro: new FormControl('', Validators.required),
       pontoReferencia: new FormControl(''),
-      turmas: new FormControl([], Validators.required),
+      turma: new FormControl([], Validators.required),
     });
 
     this.turmasService.getTurmas().subscribe((turmas) => {
@@ -138,19 +139,22 @@ export class CadastroAlunoComponent implements OnInit {
 
   salvarAluno() {
     if (this.alunoForm.valid) {
-      const novoAluno: UsuarioInterface = {
+      const novoAluno: AlunoInterface = {
         ...this.alunoForm.value,
         perfil: 'Aluno',
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
-        id: this.idUsuario ? this.idUsuario : this.gerarId(),
+        id: this.idAluno ? this.idAluno : this.gerarId(),
+        turma: parseInt(this.alunoForm.value.turma[0])
       };
-      this.usuarioService.postUsuario(novoAluno).subscribe((retorno) => {
+      console.log("turmas");
+      console.log(novoAluno.turma);
+      this.alunoService.postAluno(novoAluno).subscribe((retorno) => {
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',
-          'Usuário criado com sucesso!'
+          'Aluno criado com sucesso!'
         );
       });
     } else {
@@ -167,7 +171,7 @@ export class CadastroAlunoComponent implements OnInit {
       const alunoEditado: UsuarioInterface = {
         ...this.alunoForm.value,
         perfil: 'Aluno',
-        id: this.idUsuario,
+        id: this.idAluno,
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
@@ -189,8 +193,8 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   deletarAluno(): void {
-    if (this.isEdit && this.idUsuario) {
-      const idAluno = this.idUsuario;
+    if (this.isEdit && this.idAluno) {
+      const idAluno = this.idAluno;
 
       const nomeAluno = this.alunoForm.get('nome')?.value;
       //  verifique as avaliações

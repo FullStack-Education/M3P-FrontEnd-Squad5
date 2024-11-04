@@ -1,11 +1,7 @@
 <div class="cadastro-aluno" *ngIf="isAdmin">
     <h1>Cadastrar novo aluno</h1>
     <form [formGroup]="alunoForm" (ngSubmit)="salvarAluno()">
-      <div class="botoes">
-        <button id="save-bt" type="submit" [disabled]="isEdit">Salvar</button>
-        <button id="edit-bt" type="button" (click)="editarAluno()" [disabled]="idUsuario == undefined">Editar</button>
-        <button id="delete-bt" type="button" (click)="deletarAluno()" [disabled]="idUsuario == undefined">Deletar</button>
-      </div>
+      
 
     <div class="container-grid" >
     <div class="col-3">
@@ -137,14 +133,20 @@
       </div>
       <div class="col-2">
         <label for="turmas">Turmas:*</label>
-        <select id="turmas" formControlName="turmas" multiple>
-          <option *ngFor="let turma of turmas">{{ turma.nome }}</option>
+        <select id="turmas" formControlName="turma" multiple>
+          <option *ngFor="let turma of turmas" [value]="turma.id">{{ turma.nome }}</option>
         </select>
-        <span *ngIf="(alunoForm.controls['turmas'].dirty || alunoForm.controls['turmas'].touched) &&
-                alunoForm.controls['turmas'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+        <span *ngIf="(alunoForm.controls['turma'].dirty || alunoForm.controls['turma'].touched) &&
+                alunoForm.controls['turma'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div> 
-
     </div>  
+
+    <div class="botoes">
+        <button id="save-bt" type="submit" [disabled]="isEdit">Salvar</button>
+        <button id="edit-bt" type="button" (click)="editarAluno()" [disabled]="!isEdit">Editar</button>
+        <button id="delete-bt" type="button" (click)="deletarAluno()" [disabled]="!isEdit">Deletar</button>
+      </div>
+
     </form>
   </div>
 

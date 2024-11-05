@@ -32,6 +32,10 @@ export class DocentesService {
     return this.httpClient.get<DocenteInterface>(urlCompleta, {headers: this.getHeaders()});
   }
 
+  postDocente(docente: DocenteInterface): Observable<any> {
+    return this.httpClient.post<any>(this.apiUrl, docente,  {headers: this.getHeaders()});
+  }
+
   numeroDocentesMatriculados(): Observable<number> {
     return this.getDocentesMatriculados().pipe(
       map(docentes => docentes.length)

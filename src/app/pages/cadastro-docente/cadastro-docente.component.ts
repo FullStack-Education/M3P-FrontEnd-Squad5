@@ -16,6 +16,7 @@ import { NotasService } from '../../shared/services/notas.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
 import { DocentesService } from 'app/shared/services/docentes.service';
+import { DocenteInterface } from 'app/shared/interfaces/docentes.interface';
 
 @Component({
   selector: 'app-cadastro-docente',
@@ -101,7 +102,7 @@ export class CadastroDocenteComponent implements OnInit {
       estadoCivil: new FormControl('', Validators.required),
       telefone: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\(\d{2}\) \d \d{4}-\d{4}$/),
+        Validators.pattern(/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/),
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [
@@ -143,15 +144,16 @@ export class CadastroDocenteComponent implements OnInit {
 
   salvarDocente() {
     if (this.docenteForm.valid) {
-      const novoDocente: UsuarioInterface = {
+      const novoDocente: DocenteInterface = {
         ...this.docenteForm.value,
         perfil: 'Docente',
         idade: this.calcularIdade(
           new Date(this.docenteForm.value.dataNascimento)
         ),
         id: this.idUsuario ? this.idUsuario : this.gerarId(),
+        materias: parseInt(this.docenteForm.value.materias[0])
       };
-      this.usuarioService.postUsuario(novoDocente).subscribe((retorno) => {
+      this.docenteService.postDocente(novoDocente).subscribe((retorno) => {
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',

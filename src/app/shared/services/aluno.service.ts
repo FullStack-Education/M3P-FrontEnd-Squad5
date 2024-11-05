@@ -40,6 +40,10 @@ export class AlunoService {
     return this.httpClient.put<any>(`${this.apiUrl}/${aluno.id}`, aluno, {headers: this.getHeaders()});
   }
 
+  deleteAluno(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.apiUrl}/${id}`, {headers: this.getHeaders()});
+  }
+
 
   numeroAlunosMatriculados(): Observable<number> {
     return this.getAlunosMatriculados().pipe(

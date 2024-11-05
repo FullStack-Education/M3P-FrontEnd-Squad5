@@ -195,7 +195,7 @@ export class CadastroAlunoComponent implements OnInit {
 
   deletarAluno(): void {
     if (this.isEdit && this.idAluno) {
-      const idAluno = this.idAluno;
+      const idAluno = parseInt(this.idAluno);
 
       const nomeAluno = this.alunoForm.get('nome')?.value;
       //  verifique as avaliações
@@ -212,7 +212,7 @@ export class CadastroAlunoComponent implements OnInit {
           }
 
           // Se não há avaliações vinculadas, deletar o aluno
-          this.usuarioService.deleteUsuario(idAluno).subscribe(() => {
+          this.alunoService.deleteAluno(idAluno).subscribe(() => {
             this.toastService.showToast(
               ToastType.SUCCESS,
               'Sucesso!',

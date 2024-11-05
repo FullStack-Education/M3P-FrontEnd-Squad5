@@ -30,7 +30,8 @@
   
   .botoes {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 2rem;
   }
   
 
@@ -50,8 +51,19 @@
   }
   
   .botoes button[disabled] {
-    background-color: #ccc;
-    cursor: not-allowed;
+    visibility: hidden;
+  }
+
+  #save-bt {
+    background:  rgb(131, 234, 131);
+  }
+
+  #edit-bt {
+    background: rgb(131, 234, 131);
+  }
+
+  #delete-bt {
+    background: rgb(221, 121, 121);
   }
 
   .container-grid{
@@ -79,4 +91,10 @@
 
 .col-3{
     grid-column: span 3;
+}
+
+.label-error{
+  margin-bottom: 5px;
+  color: red;
+  font-size: 10px;
 }

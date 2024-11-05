@@ -14,6 +14,8 @@ import { TurmasService } from '../../shared/services/turmas.service';
 import { NotasService } from '../../shared/services/notas.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { AlunoService } from 'app/shared/services/aluno.service';
+import { AlunoInterface } from 'app/shared/interfaces/alunos.interface';
 import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
@@ -27,7 +29,7 @@ export class CadastroAlunoComponent implements OnInit {
   alunoForm!: FormGroup;
   turmas: any[] = [];
   isEdit = false;
-  idUsuario: string | undefined;
+  idAluno: string | undefined;
 
   generos = ['', 'Masculino', 'Feminino', 'Outro'];
   estadosCivis = ['', 'Solteiro(a)', 'Casado(a)', 'Divorciado(a)', 'Viúvo(a)'];
@@ -39,18 +41,37 @@ export class CadastroAlunoComponent implements OnInit {
     private turmasService: TurmasService,
     private notasService: NotasService,
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private alunoService: AlunoService
   ) {}
 
   ngOnInit(): void {
-    this.idUsuario = this.activatedRoute.snapshot.params['id'];
+    this.idAluno = this.activatedRoute.snapshot.params['id'];
 
-    if (this.idUsuario) {
+    if (this.idAluno) {
       this.isEdit = true;
-      this.usuarioService.getUsuario(this.idUsuario).subscribe((usuario) => {
+      this.alunoService.getAluno(this.idAluno).subscribe((usuario) => {
         if (usuario) {
           this.alunoForm.patchValue({
             nome: usuario.nome || '',
+            genero: usuario.genero || '',
+            dataNascimento: usuario.dataNascimento || '',
+            cpf: usuario.cpf || '',
+            rg: usuario.rg || '',
+            estadoCivil: usuario.estadoCivil || '',
+            telefone: usuario.telefone || '',
+            email: usuario.email || '',
+            senha: usuario.senha || '',
+            naturalidade: usuario.naturalidade || '',
+            cep: usuario.cep || '',
+            cidade: usuario.cidade || '',
+            estado: usuario.estado || '',
+            logradouro: usuario.logradouro || '',
+            numero: usuario.numero || '',
+            complemento: usuario.complemento || '',
+            bairro: usuario.bairro || '',
+            pontoReferencia: usuario.pontoReferencia || '',
+            turma: usuario.turma || [],
           });
         }
       });
@@ -72,9 +93,11 @@ export class CadastroAlunoComponent implements OnInit {
       estadoCivil: new FormControl('', Validators.required),
       telefone: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\(\d{2}\) \d \d{4}-\d{4}$/),
+        Validators.pattern(
+          /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/
+        ),
       ]),
-      email: new FormControl('', [Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -92,7 +115,7 @@ export class CadastroAlunoComponent implements OnInit {
       complemento: new FormControl(''),
       bairro: new FormControl('', Validators.required),
       pontoReferencia: new FormControl(''),
-      turmas: new FormControl([], Validators.required),
+      turma: new FormControl([], Validators.required),
     });
 
     this.turmasService.getTurmas().subscribe((turmas) => {
@@ -118,21 +141,24 @@ export class CadastroAlunoComponent implements OnInit {
 
   salvarAluno() {
     if (this.alunoForm.valid) {
-      const novoAluno: UsuarioInterface = {
+      const novoAluno: AlunoInterface = {
         ...this.alunoForm.value,
         perfil: 'Aluno',
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
-        id: this.idUsuario ? this.idUsuario : this.gerarId(),
+        id: this.idAluno ? this.idAluno : this.gerarId(),
+        turma: parseInt(this.alunoForm.value.turma[0]),
       };
-      // this.usuarioService.postUsuario(novoAluno).subscribe((retorno) => {
-      //   this.toastService.showToast(
-      //     ToastType.SUCCESS,
-      //     'Sucesso!',
-      //     'Usuário criado com sucesso!'
-      //   );
-      // });
+      console.log('turmas');
+      console.log(novoAluno.turma);
+      this.alunoService.postAluno(novoAluno).subscribe((retorno) => {
+        this.toastService.showToast(
+          ToastType.SUCCESS,
+          'Sucesso!',
+          'Aluno criado com sucesso!'
+        );
+      });
     } else {
       this.toastService.showToast(
         ToastType.ERROR,
@@ -147,18 +173,19 @@ export class CadastroAlunoComponent implements OnInit {
       const alunoEditado: UsuarioInterface = {
         ...this.alunoForm.value,
         perfil: 'Aluno',
-        id: this.idUsuario,
+        id: this.idAluno,
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
+        turma: parseInt(this.alunoForm.value.turma[0]),
       };
-      // this.usuarioService.putUsuario(alunoEditado).subscribe(() => {
-      //   this.toastService.showToast(
-      //     ToastType.SUCCESS,
-      //     'Sucesso!',
-      //     'Aluno editado com sucesso!'
-      //   );
-      // });
+      this.alunoService.putAluno(alunoEditado).subscribe(() => {
+        this.toastService.showToast(
+          ToastType.SUCCESS,
+          'Sucesso!',
+          'Aluno editado com sucesso!'
+        );
+      });
     } else {
       this.toastService.showToast(
         ToastType.ERROR,
@@ -169,8 +196,8 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   deletarAluno(): void {
-    if (this.isEdit && this.idUsuario) {
-      const idAluno = this.idUsuario;
+    if (this.isEdit && this.idAluno) {
+      const idAluno = parseInt(this.idAluno);
 
       const nomeAluno = this.alunoForm.get('nome')?.value;
       //  verifique as avaliações
@@ -187,13 +214,13 @@ export class CadastroAlunoComponent implements OnInit {
           }
 
           // Se não há avaliações vinculadas, deletar o aluno
-          // this.usuarioService.deleteUsuario(idAluno).subscribe(() => {
-          //   this.toastService.showToast(
-          //     ToastType.SUCCESS,
-          //     'Sucesso!',
-          //     'Aluno deletado com sucesso!'
-          //   );
-          // });
+          this.alunoService.deleteAluno(idAluno).subscribe(() => {
+            this.toastService.showToast(
+              ToastType.SUCCESS,
+              'Sucesso!',
+              'Aluno deletado com sucesso!'
+            );
+          });
         });
     }
   }

@@ -10,15 +10,6 @@
       "telefone": "(11) 9 9999-9999"
     },
     {
-      "id": "2",
-      "nome": "James Logan Howlett",
-      "email": "docente@school.com",
-      "senha": "pass2",
-      "perfil": "Docente",
-      "idade": 101,
-      "telefone": "(11) 9 9999-9999"
-    },
-    {
       "id": "3",
       "nome": "Jean Elaine Grey",
       "email": "aluno@school.com",
@@ -92,31 +83,33 @@
       "complemento": "",
       "bairro": "Trindade",
       "pontoReferencia": "",
-      "turmas": [
-        "Biologia Molecular e Genética"
-      ],
+      "turmas": ["Biologia Molecular e Genética"],
       "perfil": "Aluno",
       "idade": 0
     },
     {
-      "id": "14",
-      "nome": "Pessoa da Silva",
-      "genero": "Masculino",
-      "dataNascimento": "2024-10-03",
-      "cpf": "111.111.111-11",
-      "rg": "1111111-SSP",
-      "estadoCivil": "Casado(a)",
-      "telefone": "11 99999-9999",
-      "email": "blabla",
-      "senha": "12341111",
-      "naturalidade": "UmLugarQualquer",
-      "cep": "88040400",
+      "id": "1e185icnr",
+      "nome": "fulano da silva",
+      "genero": "Outro",
+      "dataNascimento": "2024-11-07",
+      "cpf": "555.555.555-55",
+      "rg": "555555",
+      "estadoCivil": "Viúvo(a)",
+      "telefone": "(48) 9999-9999",
+      "email": "email@mail",
+      "senha": "12345678",
+      "naturalidade": "cidadenatural",
+      "cep": "88020001",
       "cidade": "Florianópolis",
       "estado": "SC",
-      "logradouro": "Avenida Desembargador Vítor Lima",
-      "numero": "410",
-      "perfil": "Docente",
-      "idade": 0
+      "logradouro": "Avenida Hercílio Luz",
+      "numero": "90",
+      "complemento": "",
+      "bairro": "Centro",
+      "pontoReferencia": "",
+      "turmas": ["Biologia Molecular e Genética"],
+      "perfil": "Aluno",
+      "idade": -1
     }
   ],
   "turmas": [

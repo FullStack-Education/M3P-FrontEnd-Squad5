@@ -36,7 +36,7 @@ export class PaginaLoginComponent {
     console.log('Login:', this.login);
     this.usuariosService.login(this.login.email, this.login.senha).subscribe({
       next: (response) => {
-        // If login is successful and a token is received
+        
         console.log('respondse:', response);
         console.log('respondse token:', response.valorJWT);
         if (response && response.valorJWT) {
@@ -45,27 +45,47 @@ export class PaginaLoginComponent {
           localStorage.setItem('jwt_token', response.valorJWT);
 
           // Optionally, retrieve user profile information if needed
-          this.paginaLoginService
-            .getPerfil(this.login.email)
-            .subscribe((perfil) => {
-              if (perfil) {
-                // Use the profile information if needed
-                this.login.perfil = perfil.perfil;
-                this.login.nome = perfil.nome;
-                this.login.id = perfil.id;
-              }
 
-              // Navigate to the home page upon successful login
-              this.paginaLoginService.login(this.login);
-              this.router.navigate(['/home']);
+          this.usuariosService.getUsuario(this.login.email).subscribe((usuario) => {
+            if (usuario) {
+              this.login.perfil = usuario.perfil;
+              this.login.nome = usuario.nome;
+              this.login.id = usuario.id;
+            }
 
-              this.toastService.showToast(
-                ToastType.SUCCESS,
-                'Sucesso!',
-                'Usuário logado com Sucesso!'
-              );
-            });
-        } else {
+            // Navigate to the home page upon successful login
+            this.paginaLoginService.login(this.login);
+            this.router.navigate(['/home']);
+
+            this.toastService.showToast(
+              ToastType.SUCCESS,
+              'Sucesso!',
+              'Usuário logado com Sucesso!'
+            );
+          });
+
+          // this.paginaLoginService
+          //   .getPerfil(this.login.email)
+          //   .subscribe((perfil) => {
+          //     if (perfil) {
+          //       // Use the profile information if needed
+          //       this.login.perfil = perfil.perfil;
+          //       this.login.nome = perfil.nome;
+          //       this.login.id = perfil.id;
+          //     }
+
+          //     // Navigate to the home page upon successful login
+          //     this.paginaLoginService.login(this.login);
+          //     this.router.navigate(['/home']);
+
+          //     this.toastService.showToast(
+          //       ToastType.SUCCESS,
+          //       'Sucesso!',
+          //       'Usuário logado com Sucesso!'
+          //     );
+          //   });
+         
+        }else {
           this.toastService.showToast(
             ToastType.ERROR,
             'Falha!',

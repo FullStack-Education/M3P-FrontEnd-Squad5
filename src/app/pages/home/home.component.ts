@@ -113,9 +113,7 @@ buscaAluno() {
       this.alunosEncontrados = this.alunos.filter(
         (aluno) =>
       aluno.nome.toLowerCase().includes(this.valorBusca.toLowerCase()) ||
-          aluno.telefone
-            .toLowerCase()
-            .includes(this.valorBusca.toLowerCase()) ||
+          //aluno.telefone
       aluno.email.toLowerCase().includes(this.valorBusca.toLowerCase())
     );
   } else {

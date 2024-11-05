@@ -97,6 +97,32 @@
       ],
       "perfil": "Aluno",
       "idade": 0
+    },
+    {
+      "id": "1e185icnr",
+      "nome": "fulano da silva",
+      "genero": "Outro",
+      "dataNascimento": "2024-11-07",
+      "cpf": "555.555.555-55",
+      "rg": "555555",
+      "estadoCivil": "Viúvo(a)",
+      "telefone": "(48) 9999-9999",
+      "email": "email@mail",
+      "senha": "12345678",
+      "naturalidade": "cidadenatural",
+      "cep": "88020001",
+      "cidade": "Florianópolis",
+      "estado": "SC",
+      "logradouro": "Avenida Hercílio Luz",
+      "numero": "90",
+      "complemento": "",
+      "bairro": "Centro",
+      "pontoReferencia": "",
+      "turmas": [
+        "Biologia Molecular e Genética"
+      ],
+      "perfil": "Aluno",
+      "idade": -1
     }
   ],
   "turmas": [

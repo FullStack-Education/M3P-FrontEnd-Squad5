@@ -36,6 +36,10 @@ export class DocentesService {
     return this.httpClient.post<any>(this.apiUrl, docente,  {headers: this.getHeaders()});
   }
 
+  putDocente(docente: DocenteInterface): Observable<any> {
+    return this.httpClient.put<any>(`${this.apiUrl}/${docente.id}`, docente, {headers: this.getHeaders()});
+  }
+
   numeroDocentesMatriculados(): Observable<number> {
     return this.getDocentesMatriculados().pipe(
       map(docentes => docentes.length)

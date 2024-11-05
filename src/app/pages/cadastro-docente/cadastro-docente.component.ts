@@ -171,15 +171,16 @@ export class CadastroDocenteComponent implements OnInit {
 
   editarDocente(): void {
     if (this.isEdit && this.docenteForm.valid) {
-      const docenteEditado: UsuarioInterface = {
+      const docenteEditado: DocenteInterface = {
         ...this.docenteForm.value,
         perfil: 'Docente',
         id: this.idUsuario,
         idade: this.calcularIdade(
           new Date(this.docenteForm.value.dataNascimento)
         ),
+        materias: parseInt(this.docenteForm.value.materias[0])
       };
-      this.usuarioService.putUsuario(docenteEditado).subscribe(() => {
+      this.docenteService.putDocente(docenteEditado).subscribe(() => {
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',

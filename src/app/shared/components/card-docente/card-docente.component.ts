@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuLateralService } from '../../services/menu-lateral.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-card-docente',
@@ -19,27 +19,21 @@ export class CardDocenteComponent {
       }
     | undefined;
 
-  constructor(
-    private router: Router,
-    private menuLateralService: MenuLateralService
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   verMais(id: string): void {
     this.router.navigate(['/cadastro-docente', id]);
   }
 
   get isAdmin(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
 }

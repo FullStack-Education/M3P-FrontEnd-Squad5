@@ -5,35 +5,30 @@ import { ActivatedRoute } from '@angular/router';
 import { TurmaInterface } from '../../shared/interfaces/turma.interface';
 import { NotaInterface } from '../../shared/interfaces/nota.interface';
 import { TurmasService } from '../../shared/services/turmas.service';
-import { MenuLateralService } from '../../shared/services/menu-lateral.service';
-
-
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-notas-alunos',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './notas-alunos.component.html',
-  styleUrl: './notas-alunos.component.css'
+  styleUrl: './notas-alunos.component.scss',
 })
 export class NotasAlunosComponent implements OnInit {
-
   notas: any[] = [];
   turmas: TurmaInterface[] = [];
   alunoName: string = '';
   perfilLogado: string = '';
 
-
   constructor(
     private notasService: NotasService,
     private turmaService: TurmasService,
-    private menuLateralService: MenuLateralService,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.alunoName = this.getNameUsuarioLogado();
-    this.perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
     this.getNotasAluno();
 
     // this.turmaService.getTurmas().subscribe((turmas) => {
@@ -43,15 +38,16 @@ export class NotasAlunosComponent implements OnInit {
 
   getNotasAluno() {
     this.notasService.getNotasByAlunoName(this.alunoName).subscribe((notas) => {
-      ;
-      this.notas = notas.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
+      this.notas = notas.sort(
+        (a, b) => new Date(a.data).getTime() - new Date(b.data).getTime()
+      );
     });
   }
 
   agruparPorMateria() {
     const materias = new Map<string, any>();
 
-    this.notas.forEach(nota => {
+    this.notas.forEach((nota) => {
       const materiaNome = nota.materia;
 
       if (!materias.has(materiaNome)) {
@@ -64,29 +60,29 @@ export class NotasAlunosComponent implements OnInit {
     return Array.from(materias.values());
   }
 
-
-
-
   getIdUsuarioLogado(): string {
-    const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado') || '{}');
+    const usuarioLogado = JSON.parse(
+      sessionStorage.getItem('usuarioLogado') || '{}'
+    );
     return usuarioLogado.id || '';
   }
 
   getNameUsuarioLogado(): string {
-    const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado') || '{}');
+    const usuarioLogado = JSON.parse(
+      sessionStorage.getItem('usuarioLogado') || '{}'
+    );
     return usuarioLogado.nome || '';
   }
 
   get isAdmin(): boolean {
-    return this.perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    return this.perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    return this.perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
-
 }

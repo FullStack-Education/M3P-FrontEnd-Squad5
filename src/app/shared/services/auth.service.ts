@@ -2,45 +2,68 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
-interface LoginResponse {
-  token: string;
-  expirationTime: number;
-}
+import { environment } from 'environments/environment';
+import { TokenResponse } from '../interfaces/tokenresponse.interface';
+import { Profile } from '../enums/profile.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/login'; // Adjust this to your backend URL
+  private API_URL = `${environment.apiUrl}`;
+  private perfilLogado: Profile;
   private tokenKey = 'jwt_token';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.perfilLogado = this.getPerfilUsuarioLogado();
+  }
 
-  login(username: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.apiUrl, { login: username, senha: password })
+  login = (email: string, password: string): Observable<TokenResponse> =>
+    this.http
+      .post<TokenResponse>(`${this.API_URL}login`, {
+        login: email,
+        senha: password,
+      })
       .pipe(
-        tap(response => {
-          this.setToken(response.token);
+        tap((response) => {
+          this.setToken(response.valorJWT);
         })
       );
-  }
 
   setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
+  getToken = (): string | null => localStorage.getItem(this.tokenKey);
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();
+  isAuthenticated = (): boolean => !!this.getToken();
+
+  getHeaders = (): HttpHeaders =>
+    new HttpHeaders({ Authorization: `Bearer ${this.getToken()}` });
+
+  get isAdmin(): boolean {
+    return this.perfilLogado === Profile.ADMIN;
+  }
+
+  get isDocente(): boolean {
+    return (
+      this.perfilLogado !== Profile.ADMIN && this.perfilLogado !== Profile.ALUNO
+    );
+  }
+
+  get isAluno(): boolean {
+    return this.perfilLogado === Profile.ALUNO;
+  }
+
+  private getPerfilUsuarioLogado(): Profile {
+    const usuarioLogado = sessionStorage.getItem('usuarioLogado');
+    if (!usuarioLogado) return Profile.ALUNO;
+
+    const usuario = JSON.parse(usuarioLogado);
+    return usuario.papel;
   }
 }
-
-

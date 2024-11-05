@@ -10,19 +10,19 @@ import { ViaCepService } from '../../shared/services/via-cep.service';
 import { TurmaInterface } from '../../shared/interfaces/turma.interface';
 import { TurmasService } from '../../shared/services/turmas.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuLateralService } from '../../shared/services/menu-lateral.service';
 import { DocentesService } from '../../shared/services/docentes.service';
 import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
 import { CursosExtraService } from 'app/shared/services/cursos-extra.service';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-cadastro-turma',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './cadastro-turma.component.html',
-  styleUrl: './cadastro-turma.component.css',
+  styleUrl: './cadastro-turma.component.scss',
 })
 export class CadastroTurmaComponent implements OnInit {
   turmaForm!: FormGroup;
@@ -36,7 +36,7 @@ export class CadastroTurmaComponent implements OnInit {
     private viaCepService: ViaCepService,
     private turmaService: TurmasService,
     private activatedRoute: ActivatedRoute,
-    private menuLateralService: MenuLateralService,
+    private authService: AuthService,
     private docentesService: DocentesService,
     private cursosService: CursosExtraService,
     private toastService: ToastService
@@ -44,7 +44,6 @@ export class CadastroTurmaComponent implements OnInit {
 
   ngOnInit(): void {
     this.idTurma = this.activatedRoute.snapshot.params['id'];
-    this.perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
     this.cursosService.getCursosExtras().subscribe((cursos) => {
       this.cursos = cursos;
     });
@@ -84,19 +83,18 @@ export class CadastroTurmaComponent implements OnInit {
 
   salvarTurma() {
     if (this.turmaForm.valid) {
-
       if (this.perfilLogado === 'Docente') {
         this.turmaForm.controls['docente'].setValue(
           this.getNomeUsuarioLogado()
         );
       }
-      
+
       const novaTurma: TurmaInterface = {
         ...this.turmaForm.value,
         id: this.idTurma ? this.idTurma : this.gerarId(),
         professor: this.turmaForm.controls['docente'].value,
       };
-      
+
       this.turmaService.postTurma(novaTurma).subscribe((retorno) => {
         console.log('Passou');
         this.toastService.showToast(
@@ -133,14 +131,14 @@ export class CadastroTurmaComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    return this.perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    return this.perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    return this.perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
 }

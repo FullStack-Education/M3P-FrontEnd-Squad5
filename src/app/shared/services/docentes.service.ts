@@ -4,23 +4,21 @@ import { UsuariosService } from './usuarios.service';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DocentesService {
-  
+  constructor(private usuariosService: UsuariosService) {}
 
-  constructor(private usuariosService: UsuariosService) { }
-
- 
   getDocentesMatriculados(): Observable<UsuarioInterface[]> {
-    return this.usuariosService.getUsuarios().pipe(
-      map((usuarios: any[]) => usuarios.filter(usuario => usuario.perfil === 'Docente'))
-    );
+    return new Observable<UsuarioInterface[]>();
+    // return this.usuariosService.getUsuarios().pipe(
+    //   map((usuarios: any[]) => usuarios.filter(usuario => usuario.perfil === 'Docente'))
+    // );
   }
 
   numeroDocentesMatriculados(): Observable<number> {
     return this.getDocentesMatriculados().pipe(
-      map(docentes => docentes.length)
+      map((docentes) => docentes.length)
     );
   }
 }

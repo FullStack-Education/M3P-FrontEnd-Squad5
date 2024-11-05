@@ -10,18 +10,18 @@ import { ViaCepService } from '../../shared/services/via-cep.service';
 import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuLateralService } from '../../shared/services/menu-lateral.service';
 import { TurmasService } from '../../shared/services/turmas.service';
 import { NotasService } from '../../shared/services/notas.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-cadastro-aluno',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './cadastro-aluno.component.html',
-  styleUrl: './cadastro-aluno.component.css',
+  styleUrl: './cadastro-aluno.component.scss',
 })
 export class CadastroAlunoComponent implements OnInit {
   alunoForm!: FormGroup;
@@ -36,9 +36,9 @@ export class CadastroAlunoComponent implements OnInit {
     private viaCepService: ViaCepService,
     private usuarioService: UsuariosService,
     private activatedRoute: ActivatedRoute,
-    private menuLateralService: MenuLateralService,
     private turmasService: TurmasService,
     private notasService: NotasService,
+    private authService: AuthService,
     private toastService: ToastService
   ) {}
 
@@ -50,7 +50,7 @@ export class CadastroAlunoComponent implements OnInit {
       this.usuarioService.getUsuario(this.idUsuario).subscribe((usuario) => {
         if (usuario) {
           this.alunoForm.patchValue({
-            nome: usuario.nome || ''
+            nome: usuario.nome || '',
           });
         }
       });
@@ -126,13 +126,13 @@ export class CadastroAlunoComponent implements OnInit {
         ),
         id: this.idUsuario ? this.idUsuario : this.gerarId(),
       };
-      this.usuarioService.postUsuario(novoAluno).subscribe((retorno) => {
-        this.toastService.showToast(
-          ToastType.SUCCESS,
-          'Sucesso!',
-          'Usuário criado com sucesso!'
-        );
-      });
+      // this.usuarioService.postUsuario(novoAluno).subscribe((retorno) => {
+      //   this.toastService.showToast(
+      //     ToastType.SUCCESS,
+      //     'Sucesso!',
+      //     'Usuário criado com sucesso!'
+      //   );
+      // });
     } else {
       this.toastService.showToast(
         ToastType.ERROR,
@@ -152,13 +152,13 @@ export class CadastroAlunoComponent implements OnInit {
           new Date(this.alunoForm.value.dataNascimento)
         ),
       };
-      this.usuarioService.putUsuario(alunoEditado).subscribe(() => {
-        this.toastService.showToast(
-          ToastType.SUCCESS,
-          'Sucesso!',
-          'Aluno editado com sucesso!'
-        );
-      });
+      // this.usuarioService.putUsuario(alunoEditado).subscribe(() => {
+      //   this.toastService.showToast(
+      //     ToastType.SUCCESS,
+      //     'Sucesso!',
+      //     'Aluno editado com sucesso!'
+      //   );
+      // });
     } else {
       this.toastService.showToast(
         ToastType.ERROR,
@@ -187,13 +187,13 @@ export class CadastroAlunoComponent implements OnInit {
           }
 
           // Se não há avaliações vinculadas, deletar o aluno
-          this.usuarioService.deleteUsuario(idAluno).subscribe(() => {
-            this.toastService.showToast(
-              ToastType.SUCCESS,
-              'Sucesso!',
-              'Aluno deletado com sucesso!'
-            );
-          });
+          // this.usuarioService.deleteUsuario(idAluno).subscribe(() => {
+          //   this.toastService.showToast(
+          //     ToastType.SUCCESS,
+          //     'Sucesso!',
+          //     'Aluno deletado com sucesso!'
+          //   );
+          // });
         });
     }
   }
@@ -213,17 +213,14 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
 }

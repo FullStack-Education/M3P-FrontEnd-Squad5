@@ -9,7 +9,6 @@ import {
 import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuLateralService } from '../../shared/services/menu-lateral.service';
 import { NotasService } from '../../shared/services/notas.service';
 import { NotaInterface } from '../../shared/interfaces/nota.interface';
 import { DocentesService } from '../../shared/services/docentes.service';
@@ -17,13 +16,14 @@ import { TurmasService } from '../../shared/services/turmas.service';
 import { AlunoService } from '../../shared/services/aluno.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-cadastro-nota',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './cadastro-nota.component.html',
-  styleUrl: './cadastro-nota.component.css',
+  styleUrl: './cadastro-nota.component.scss',
 })
 export class CadastroNotaComponent implements OnInit {
   notaForm!: FormGroup;
@@ -46,17 +46,16 @@ export class CadastroNotaComponent implements OnInit {
   constructor(
     private usuarioService: UsuariosService,
     private activatedRoute: ActivatedRoute,
-    private menuLateralService: MenuLateralService,
     private notaService: NotasService,
     private docentesService: DocentesService,
     private turmaService: TurmasService,
     private alunoService: AlunoService,
+    private authService: AuthService,
     private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
     this.idNota = this.activatedRoute.snapshot.params['id'];
-    this.perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
 
     if (this.idNota) {
       this.isEdit = true;
@@ -139,17 +138,14 @@ export class CadastroNotaComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
 }

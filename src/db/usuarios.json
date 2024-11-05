@@ -10,15 +10,6 @@
       "telefone": "(11) 9 9999-9999"
     },
     {
-      "id": "2",
-      "nome": "James Logan Howlett",
-      "email": "docente@school.com",
-      "senha": "pass2",
-      "perfil": "Docente",
-      "idade": 101,
-      "telefone": "(11) 9 9999-9999"
-    },
-    {
       "id": "3",
       "nome": "Jean Elaine Grey",
       "email": "aluno@school.com",

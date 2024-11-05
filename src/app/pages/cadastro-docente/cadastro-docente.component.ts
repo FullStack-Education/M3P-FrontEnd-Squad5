@@ -15,6 +15,8 @@ import { TurmasService } from '../../shared/services/turmas.service';
 import { NotasService } from '../../shared/services/notas.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { DocentesService } from 'app/shared/services/docentes.service';
+import { DocenteInterface } from 'app/shared/interfaces/docentes.interface';
 
 @Component({
   selector: 'app-cadastro-docente',
@@ -27,7 +29,7 @@ export class CadastroDocenteComponent implements OnInit {
   docenteForm!: FormGroup;
 
   isEdit = false;
-  idUsuario: string | undefined;
+  idDocente: string | undefined;
   nomeUsuario: string | undefined;
 
   generos = ['', 'Masculino', 'Feminino', 'Outro'];
@@ -44,6 +46,7 @@ export class CadastroDocenteComponent implements OnInit {
   constructor(
     private viaCepService: ViaCepService,
     private usuarioService: UsuariosService,
+    private docenteService: DocentesService,
     private turmasService: TurmasService,
     private notasService: NotasService,
     private activatedRoute: ActivatedRoute,
@@ -52,11 +55,11 @@ export class CadastroDocenteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.idUsuario = this.activatedRoute.snapshot.params['id'];
+    this.idDocente = this.activatedRoute.snapshot.params['id'];
 
-    if (this.idUsuario) {
+    if (this.idDocente) {
       this.isEdit = true;
-      this.usuarioService.getUsuario(this.idUsuario).subscribe((usuario) => {
+      this.docenteService.getDocente(this.idDocente).subscribe((usuario) => {
         if (usuario) {
           this.docenteForm.patchValue({
             nome: usuario.nome || '',
@@ -99,7 +102,7 @@ export class CadastroDocenteComponent implements OnInit {
       estadoCivil: new FormControl('', Validators.required),
       telefone: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^\(\d{2}\) \d \d{4}-\d{4}$/),
+        Validators.pattern(/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/),
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [
@@ -141,15 +144,16 @@ export class CadastroDocenteComponent implements OnInit {
 
   salvarDocente() {
     if (this.docenteForm.valid) {
-      const novoDocente: UsuarioInterface = {
+      const novoDocente: DocenteInterface = {
         ...this.docenteForm.value,
         perfil: 'Docente',
         idade: this.calcularIdade(
           new Date(this.docenteForm.value.dataNascimento)
         ),
-        id: this.idUsuario ? this.idUsuario : this.gerarId(),
+        id: this.idDocente ? this.idDocente : this.gerarId(),
+        materias: parseInt(this.docenteForm.value.materias[0])
       };
-      this.usuarioService.postUsuario(novoDocente).subscribe((retorno) => {
+      this.docenteService.postDocente(novoDocente).subscribe((retorno) => {
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',
@@ -167,15 +171,16 @@ export class CadastroDocenteComponent implements OnInit {
 
   editarDocente(): void {
     if (this.isEdit && this.docenteForm.valid) {
-      const docenteEditado: UsuarioInterface = {
+      const docenteEditado: DocenteInterface = {
         ...this.docenteForm.value,
         perfil: 'Docente',
-        id: this.idUsuario,
+        id: this.idDocente,
         idade: this.calcularIdade(
           new Date(this.docenteForm.value.dataNascimento)
         ),
+        materias: parseInt(this.docenteForm.value.materias[0])
       };
-      this.usuarioService.putUsuario(docenteEditado).subscribe(() => {
+      this.docenteService.putDocente(docenteEditado).subscribe(() => {
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',
@@ -192,8 +197,8 @@ export class CadastroDocenteComponent implements OnInit {
   }
 
   deletarDocente(): void {
-    if (this.isEdit && this.idUsuario) {
-      const idDocente = this.idUsuario;
+    if (this.isEdit && this.idDocente) {
+      const idDocente = parseInt(this.idDocente);
 
       const nomeDocente = this.docenteForm.get('nome')?.value;
       this.turmasService
@@ -222,7 +227,7 @@ export class CadastroDocenteComponent implements OnInit {
               }
 
               // Se não há turmas ou avaliações vinculadas, deletar o docente
-              this.usuarioService.deleteUsuario(idDocente).subscribe(() => {
+              this.docenteService.deleteDocente(idDocente).subscribe(() => {
                 this.toastService.showToast(
                   ToastType.SUCCESS,
                   'Sucesso!',

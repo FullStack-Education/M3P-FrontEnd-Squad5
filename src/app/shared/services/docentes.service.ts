@@ -40,6 +40,10 @@ export class DocentesService {
     return this.httpClient.put<any>(`${this.apiUrl}/${docente.id}`, docente, {headers: this.getHeaders()});
   }
 
+  deleteDocente(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.apiUrl}/${id}`, {headers: this.getHeaders()});
+  }
+
   numeroDocentesMatriculados(): Observable<number> {
     return this.getDocentesMatriculados().pipe(
       map(docentes => docentes.length)

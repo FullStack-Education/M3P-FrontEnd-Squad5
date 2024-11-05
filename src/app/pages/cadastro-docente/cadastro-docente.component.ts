@@ -77,7 +77,7 @@ export class CadastroDocenteComponent implements OnInit {
             complemento: usuario.complemento || '',
             bairro: usuario.bairro || '',
             pontoReferencia: usuario.pontoReferencia || '',
-            materias: usuario.materias || [],
+            materia: usuario.materias || [],
           });
         }
       });
@@ -119,7 +119,7 @@ export class CadastroDocenteComponent implements OnInit {
       complemento: new FormControl(''),
       bairro: new FormControl('', Validators.required),
       pontoReferencia: new FormControl(''),
-      materias: new FormControl([], Validators.required),
+      materia: new FormControl([], Validators.required),
     });
   }
 

@@ -15,6 +15,7 @@ import { TurmasService } from '../../shared/services/turmas.service';
 import { NotasService } from '../../shared/services/notas.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { DocentesService } from 'app/shared/services/docentes.service';
 
 @Component({
   selector: 'app-cadastro-docente',
@@ -44,6 +45,7 @@ export class CadastroDocenteComponent implements OnInit {
   constructor(
     private viaCepService: ViaCepService,
     private usuarioService: UsuariosService,
+    private docenteService: DocentesService,
     private turmasService: TurmasService,
     private notasService: NotasService,
     private activatedRoute: ActivatedRoute,
@@ -56,7 +58,7 @@ export class CadastroDocenteComponent implements OnInit {
 
     if (this.idUsuario) {
       this.isEdit = true;
-      this.usuarioService.getUsuario(this.idUsuario).subscribe((usuario) => {
+      this.docenteService.getDocente(this.idUsuario).subscribe((usuario) => {
         if (usuario) {
           this.docenteForm.patchValue({
             nome: usuario.nome || '',
@@ -77,7 +79,7 @@ export class CadastroDocenteComponent implements OnInit {
             complemento: usuario.complemento || '',
             bairro: usuario.bairro || '',
             pontoReferencia: usuario.pontoReferencia || '',
-            materia: usuario.materias || [],
+            materias: usuario.materias || [],
           });
         }
       });
@@ -119,7 +121,7 @@ export class CadastroDocenteComponent implements OnInit {
       complemento: new FormControl(''),
       bairro: new FormControl('', Validators.required),
       pontoReferencia: new FormControl(''),
-      materia: new FormControl([], Validators.required),
+      materias: new FormControl([], Validators.required),
     });
   }
 

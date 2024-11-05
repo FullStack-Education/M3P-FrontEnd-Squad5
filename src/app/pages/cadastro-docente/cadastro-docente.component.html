@@ -133,8 +133,8 @@
         <select id="materias" formControlName="materias" multiple>
           <option *ngFor="let materia of materias">{{ materia }}</option> 
         </select>
-        <span *ngIf="(docenteForm.controls['materia'].dirty || docenteForm.controls['materia'].touched) &&
-                docenteForm.controls['materia'].errors?.['required']" class="label-error">Campo obrigatório*</span>
+        <span *ngIf="(docenteForm.controls['materias'].dirty || docenteForm.controls['materias'].touched) &&
+                docenteForm.controls['materias'].errors?.['required']" class="label-error">Campo obrigatório*</span>
       </div> 
       </div>
 

@@ -4,6 +4,7 @@ export interface DocenteInterface {
     email: string;
     senha: string;
     perfil: string;
+    idade: number;
     genero?: string;
     dataNascimento?: string;
     cpf?: string;
@@ -19,6 +20,6 @@ export interface DocenteInterface {
       complemento?: string;
       bairro?: string;
       pontoReferencia?: string;
-    materia?: string[];
+    materias?: string[];
     usuario?: string;
   }

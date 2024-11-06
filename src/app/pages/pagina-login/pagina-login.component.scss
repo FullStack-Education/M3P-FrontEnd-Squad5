@@ -1,0 +1,18 @@
+body {
+  background-color: #6c63ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.img {
+  &-logo {
+    max-width: 160px;
+    margin: 0 auto 20px;
+  }
+  &-bg {
+    max-width: 40%;
+    max-height: 480px;
+    margin-left: 20px;
+  }
+}

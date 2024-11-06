@@ -1,0 +1,33 @@
+$purple: #5a54cc;
+.aluno-home {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  section {
+    border: 1px #ddd solid;
+    border-top: 10px $purple solid;
+    border-radius: 8px;
+    padding: 20px;
+  }
+}
+
+.nota {
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  h3 {
+    transition: all 0.3s;
+  }
+
+  &:hover {
+    h3 {
+      color: $purple;
+    }
+  }
+}
+
+.card {
+  min-width: 350px;
+  background-color: #fff;
+  box-shadow: 4px 5px 10px -3px rgba(0, 0, 0, 0.2);
+}

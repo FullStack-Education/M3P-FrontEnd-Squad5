@@ -1,0 +1,42 @@
+<div class="container" *ngIf="isAdmin || isDocente">
+  <h1 class="display-5 mb-4">Cadastrar nova turma</h1>
+  <hr>
+  <form [formGroup]="turmaForm" class="row g-3" (ngSubmit)="salvarTurma()">
+    <div class="col-12">
+      <label for="nome" class="form-label">Nome:</label>
+      <input id="nome" class="form-control" formControlName="nome" type="text">
+    </div>
+    <div class="col-4">
+      <label for="dataInicio" class="form-label">Data de Inicio:</label>
+      <input id="dataInicio" class="form-control" formControlName="dataInicio" type="date">
+    </div>
+    <div class="col-4">
+      <label for="dataTermino" class="form-label">Data de Término:</label>
+      <input id="dataTermino" class="form-control" formControlName="dataTermino" type="date" />
+    </div>
+    <div class="col-4">
+      <label for="horario" class="form-label">Horário da Turma:</label>
+      <input id="horario" class="form-control" formControlName="horario" type="time" />
+    </div>
+    <div class="col-md-6">
+      <label for="docente" class="form-label">Docente:</label>
+      <select id="docente" class="form-select" formControlName="docente">
+        <option value="" disabled selected *ngIf="isAdmin ">Selecione uma opção</option>
+        <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nome }}</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="curso" class="form-label">Curso:</label>
+      <select id="curso" class="form-select" formControlName="curso">
+        <option value="" disabled selected *ngIf="isAdmin ">Selecione uma opção</option>
+        <option *ngFor="let curso of cursos" [value]="curso.id">{{ curso.nome }}</option>
+      </select>
+    </div>
+    <hr />
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="isEdit">Salvar</button>
+      <button type="button" class="btn btn-secondary mx-2" [disabled]="!isEdit">Editar</button>
+      <button type="button" class="btn btn-danger ms-2" [disabled]="!isEdit">Deletar</button>
+    </div>
+  </form>
+</div>

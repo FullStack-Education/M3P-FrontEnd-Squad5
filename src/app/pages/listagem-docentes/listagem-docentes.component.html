@@ -1,0 +1,27 @@
+<div class="container" *ngIf="isAdmin">
+    <h1 class="display-5 mb-4">Listagem de Docentes</h1>
+    <hr>
+    <div *ngIf="isAdmin">
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Digite nome ou id" [(ngModel)]="valorBusca"
+                (input)="buscaDocente()" />
+            <button class="btn btn-outline-primary" type="button" (click)="selecionaPrimeiroDocente()">Buscar</button>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-center mt-5">
+            <div class="g-5" *ngIf="valorBusca; else templateTodosDocentes">
+                <app-card-docente *ngFor="let docente of docentesEncontrados | async" [docente]="docente">
+                </app-card-docente>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #templateTodosDocentes>
+
+        <div *ngIf="isAdmin" class="d-flex justify-content-center align-content-around flex-wrap">
+            <app-card-docente *ngFor="let docente of docentes | async" [docente]="docente">
+            </app-card-docente>
+        </div>
+    </ng-template>
+</div>

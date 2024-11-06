@@ -1,0 +1,6 @@
+<div id="page-content-wrapper">
+  <app-toolbar *ngIf="router.url !== '/login'"></app-toolbar>
+  <router-outlet></router-outlet>
+  <ngx-loading-bar [color]="'#6c63ff'" [includeSpinner]="false"></ngx-loading-bar>
+  <app-toast></app-toast>
+</div>

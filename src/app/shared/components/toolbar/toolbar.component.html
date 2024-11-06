@@ -1,0 +1,31 @@
+<header
+  class="d-flex flex-wrap align-items-center justify-content-between justify-content-md-between py-3 mb-4 border-bottom">
+  <div class="col-md-3">
+    <a href="#" (click)="openSidebar()" class="d-inline-flex link-body-emphasis text-decoration-none ms-2"
+      appPreventDefault>
+      <ng-icon [size]="'32'" [color]="'#5a54cc'" name="heroBars3"></ng-icon>
+    </a>
+  </div>
+
+  <a href="/" class=" col-2 col-md-auto justify-content-center link-body-emphasis text-decoration-none ">
+    <img src="assets/images/logo_labPCP.png" alt="labPCP logo" class="bi me-2" height="32">
+  </a>
+
+  <div ngbDropdown class="dropdown col-md-3 text-end me-2">
+    <span class="d-none d-lg-inline-block me-2">{{ nomeUsuarioLogado }}</span>
+    <a class="link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+      ngbDropdownToggle>
+      <img src="assets/images/user.png" alt="mdo" width="32" height="32" class="rounded-circle border border-1">
+    </a>
+    <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end text-small">
+      <!-- <li><a ngbDropdownItem href="#" appPreventDefault>New project...</a></li>
+      <li><a ngbDropdownItem href="#" appPreventDefault>Settings</a></li>
+      <li><a ngbDropdownItem href="#" appPreventDefault>Profile</a></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li> -->
+      <li><a ngbDropdownItem href="#" appPreventDefault (click)="logout()">Sair</a></li>
+    </ul>
+  </div>
+</header>
+<app-menu-lateral></app-menu-lateral>

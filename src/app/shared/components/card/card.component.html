@@ -1,0 +1,13 @@
+<div class="card d-flex align-items-center text-center py-4 m-2" style="width: 16rem;">
+  <ng-icon [class]="'pe-none '" [size]="'64'" name="heroUserCircle"></ng-icon>
+  <div class="card-body">
+    <h5 class="card-title">{{ aluno?.nome }}</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">{{ aluno?.idade }} anos</h6>
+    <p class="card-text">{{ aluno?.email }}</p>
+
+    <div class="d-grid">
+      <button class="btn btn-primary" *ngIf="isAdmin && aluno" (click)="verMais(aluno.id)">Ver Mais</button>
+      <button class="btn btn-primary" *ngIf="isDocente" (click)="lancarNota()">Lançar Nota</button>
+    </div>
+  </div>
+</div>

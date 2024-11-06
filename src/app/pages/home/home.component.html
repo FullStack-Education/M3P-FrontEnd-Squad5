@@ -1,0 +1,126 @@
+<main class="container">
+  <div *ngIf="isAdmin" class="text-center">
+    <h1 class="display-5 mb-4">Estatísticas do Sistema</h1>
+    <div class="row row-cols-auto justify-content-center align-content-center">
+      <div class="col ">
+        <div class="card mb-4">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 align-self-center">
+                  <ng-icon [color]="'#5a54cc'" [class]="'float-start fs-3'" [size]="'64'"
+                    name="heroIdentification"></ng-icon>
+                </div>
+                <div class="flex-grow-1 ms-3 text-end">
+                  <h3>{{ estatisticas.numeroAlunos }}</h3>
+                  <span>Alunos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 align-self-center">
+                  <ng-icon [color]="'#5a54cc'" [class]="'float-start fs-3'" [size]="'64'"
+                    name="heroAcademicCap"></ng-icon>
+                </div>
+                <div class="flex-grow-1 ms-3 text-end">
+                  <h3>{{ estatisticas.numeroDocentes }}</h3>
+                  <span>Docentes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 align-self-center">
+                  <ng-icon [color]="'#5a54cc'" [class]="'float-start fs-3'" [size]="'64'"
+                    name="heroPaperClip"></ng-icon>
+                </div>
+                <div class="flex-grow-1 ms-3 text-end">
+                  <h3>{{ estatisticas.numeroTurmas }}</h3>
+                  <span>Turmas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <hr *ngIf="isAdmin" />
+  <div class="d-flex justify-content-center mt-5">
+    <div *ngIf="isAdmin || isDocente" class="pesquisa">
+      <div class="campo-pesquisa">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Digite nome, telefone ou e-mail" [(ngModel)]="valorBusca"
+            (input)="buscaAluno()" />
+          <button class="btn btn-outline-primary" type="button" (click)="selecionaPrimeiroAluno()">Buscar</button>
+        </div>
+      </div>
+      <div class="resultados-busca g-5" *ngIf="valorBusca; else templateTodosAlunos">
+        <app-card *ngFor="let aluno of alunosEncontrados" [aluno]="aluno">
+        </app-card>
+      </div>
+    </div>
+  </div>
+  <ng-template #templateTodosAlunos>
+    <div *ngIf="isAdmin || isDocente" class="alunos d-flex justify-content-center align-content-around flex-wrap">
+      <app-card *ngFor="let aluno of alunos" [aluno]="aluno">
+      </app-card>
+    </div>
+  </ng-template>
+
+  <div *ngIf="isAluno" class="aluno-home">
+    <div class="row">
+      <div class="col">
+        <section>
+          <div class="content">
+            <h1 class="display-5 mb-4">Minhas Notas</h1>
+            <hr>
+            <div (click)="navegarPaginaNotasAluno()" class="nota" *ngFor="let nota of notas | slice:0:3">
+              <h3>{{ nota.nome }}</h3>
+              <p>{{ nota.materia }}<br />{{ nota.data }}</p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="col">
+        <section>
+          <div class="content">
+            <h1 class="display-5 mb-4">Minhas Matérias</h1>
+            <div class="materia" *ngFor="let materia of materias">
+              <h4>{{ materia.nome }}</h4>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="col">
+        <section>
+          <div class="content">
+            <h1 class="display-5 mb-4">Cursos Extras</h1>
+            <div class="curso" *ngFor="let curso of cursosExtras">
+              <h4>{{ curso.nome }}</h4>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+</main>

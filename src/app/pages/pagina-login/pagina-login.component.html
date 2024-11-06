@@ -1,0 +1,43 @@
+<body>
+  <div class="card border border-light-subtle rounded-4 shadow-sm">
+    <div class="card-body p-5">
+      <div class="d-flex align-content-center">
+        <img class="img-logo" src="assets/images/logo_labPCP.png">
+      </div>
+      <h2 class="text-primary">Login</h2>
+      <form [formGroup]="form" action="#" method="POST" (ngSubmit)="entrar()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com"
+            name="email" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="password" formControlName="password" name="password"
+            required />
+        </div>
+
+        <div class="col-12">
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="#" class="link-primary text-decoration-none" (click)="esqueciSenha()" appPreventDefault>Esqueceu
+              sua senha?</a>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="d-grid my-3">
+            <button class="btn btn-primary btn-lg" type="submit">Entrar</button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <p class="m-0 text-secondary text-center">Não tem conta?
+            <a href="" class="link-primary text-decoration-none" (click)="criarConta()" appPreventDefault>Criar
+              Conta</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <img class="d-none d-md-block img-bg" src="assets/images/Learning-cuate_amarela.png">
+</body>

@@ -21,9 +21,16 @@
             <label for="docente">Docente:</label>
             <select id="docente" formControlName="docente">
             <option value="" disabled selected *ngIf="isAdmin ">Selecione uma opção</option>
-            <option *ngFor="let docente of docentes">{{ docente.nome }}</option>
+            <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nome }}</option>
             </select>       
         </div>
+        <div>
+          <label for="curso">Curso:</label>
+          <select id="curso" formControlName="curso">
+          <option value="" disabled selected *ngIf="isAdmin ">Selecione uma opção</option>
+          <option *ngFor="let curso of cursos" [value]="curso.id">{{ curso.nome }}</option>
+          </select>       
+      </div>
         <div class="botoes">
         <button type="submit" [disabled]="isEdit">Salvar</button>
         <button type="button" [disabled]="!isEdit">Editar</button>

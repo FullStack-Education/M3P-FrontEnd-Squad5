@@ -1,17 +1,20 @@
 <body>
   <div class="card border border-light-subtle rounded-4 shadow-sm">
     <div class="card-body p-5">
+      <div class="d-flex align-content-center">
+        <img class="img-logo" src="assets/images/logo_labPCP.png">
+      </div>
       <h2 class="text-primary">Login</h2>
-      <form (ngSubmit)="entrar()">
+      <form [formGroup]="form" action="#" method="POST" (ngSubmit)="entrar()">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" [(ngModel)]="login.email" placeholder="name@example.com"
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com"
             name="email" required />
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="password" [(ngModel)]="login.senha" name="password"
+          <input type="password" class="form-control" id="password" formControlName="password" name="password"
             required />
         </div>
 
@@ -36,5 +39,5 @@
       </form>
     </div>
   </div>
-  <img class="d-none d-md-block" src="Learning-cuate_amarela.png">
+  <img class="d-none d-md-block img-bg" src="assets/images/Learning-cuate_amarela.png">
 </body>

@@ -1,77 +1,85 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PaginaLoginService } from '../../shared/services/pagina-login.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { CommonModule } from '@angular/common';
 import { ToastService } from 'app/shared/services/toast.service';
 import { PreventDefaultDirective } from 'app/shared/directives/prevent-default.directive';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { AuthService } from 'app/shared/services/auth.service';
+import { UsuarioInterface } from 'app/shared/interfaces/usuario.interface';
 
 @Component({
   selector: 'app-pagina-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, PreventDefaultDirective],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    PreventDefaultDirective,
+  ],
   templateUrl: './pagina-login.component.html',
   styleUrl: './pagina-login.component.scss',
 })
-export class PaginaLoginComponent {
-  login = {
-    id: '',
-    email: '',
-    senha: '',
-    perfil: '',
-    nome: '',
-  };
+export class PaginaLoginComponent implements OnInit {
+  form: FormGroup;
+  authUser: UsuarioInterface;
 
   constructor(
+    private formBuilder: FormBuilder,
     private paginaLoginService: PaginaLoginService,
     private usuariosService: UsuariosService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authService: AuthService
   ) {}
 
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+    });
+  }
+
   entrar() {
-    // Call the login method to authenticate and retrieve the JWT token
-    console.log('Login:', this.login);
-    this.usuariosService.login(this.login.email, this.login.senha).subscribe({
+    if (this.form.invalid) {
+      this.toastService.showToast(
+        ToastType.ERROR,
+        'Erro',
+        'Revise os campos e tente novamente!'
+      );
+      return;
+    }
+    const { email, password } = this.form.value;
+    console.log(this.form.value);
+    this.authService.login(email, password).subscribe({
       next: (response) => {
-        // If login is successful and a token is received
-        console.log('respondse:', response);
-        console.log('respondse token:', response.valorJWT);
-        if (response && response.valorJWT) {
-          // Store the token in localStorage
-          console.log('respondse:', response.valorJWT);
-          localStorage.setItem('jwt_token', response.valorJWT);
-
-          // Optionally, retrieve user profile information if needed
-          this.paginaLoginService
-            .getPerfil(this.login.email)
-            .subscribe((perfil) => {
-              if (perfil) {
-                // Use the profile information if needed
-                this.login.perfil = perfil.perfil;
-                this.login.nome = perfil.nome;
-                this.login.id = perfil.id;
-              }
-
-              // Navigate to the home page upon successful login
-              this.paginaLoginService.login(this.login);
-              this.router.navigate(['/home']);
-
-              this.toastService.showToast(
-                ToastType.SUCCESS,
-                'Sucesso!',
-                'Usuário logado com Sucesso!'
-              );
-            });
-        } else {
+        if (!response?.valorJWT) {
           this.toastService.showToast(
             ToastType.ERROR,
             'Falha!',
             'Token JWT não recebido.'
           );
+          return;
         }
+        this.usuariosService.getAuthUsuario().subscribe((usuario) => {
+          if (usuario) this.authUser = usuario;
+
+          this.toastService.showToast(
+            ToastType.SUCCESS,
+            'Sucesso!',
+            'Usuário logado com Sucesso!'
+          );
+          this.paginaLoginService.login(this.authUser);
+          this.router.navigate(['/home']);
+        });
       },
       error: (err) => {
         console.error('Erro de autenticação', err);

@@ -1,41 +1,28 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { UsuarioInterface } from '../interfaces/usuario.interface';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { environment } from 'environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PaginaLoginService {
+  private API_URL = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService
+  ) {}
 
-  private url = 'http://localhost:3000/usuarios';
-
-  login(usuario: { id: string, email: string, senha: string, perfil: string, nome: string }) {
+  login(usuario: UsuarioInterface) {
     sessionStorage.setItem('usuarioLogado', JSON.stringify(usuario));
   }
 
   logout() {
     sessionStorage.removeItem('usuarioLogado');
   }
-
-  
-
-
-  getPerfil(email: string): Observable<UsuarioInterface | null> {
-    return this.httpClient.get<UsuarioInterface>(this.url) 
-    .pipe(
-      map(usuario => { 
-        if (Array.isArray(usuario)) {
-          return usuario.find(u => u.email === email);
-        } else {
-          return usuario.email === email ? usuario : null; 
-        }
-      }),
-      catchError(() => of(null)) 
-    );
-}
 
   isLoggedIn(): boolean {
     return sessionStorage.getItem('usuarioLogado') !== null;

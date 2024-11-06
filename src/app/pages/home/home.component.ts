@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { DocentesService } from '../../shared/services/docentes.service';
 import { TurmasService } from '../../shared/services/turmas.service';
 import { EstatisticasInterface } from '../../shared/interfaces/estatisticas.interface';
-import { MenuLateralService } from '../../shared/services/menu-lateral.service';
 import { FormsModule } from '@angular/forms';
 import { CursosExtraService } from '../../shared/services/cursos-extra.service';
 import { MateriasService } from '../../shared/services/materias.service';
@@ -16,6 +15,8 @@ import { CursosInterface } from '../../shared/interfaces/cursos.interface';
 import { Router } from '@angular/router';
 import { NgIconComponent } from '@ng-icons/core';
 import { PreventDefaultDirective } from 'app/shared/directives/prevent-default.directive';
+import { AuthService } from 'app/shared/services/auth.service';
+import { AlunoInterface } from 'app/shared/interfaces/alunos.interface';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,7 @@ import { PreventDefaultDirective } from 'app/shared/directives/prevent-default.d
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  alunos: UsuarioInterface[] = [];
+  alunos: AlunoInterface[] = [];
 
   estatisticas: EstatisticasInterface = {
     numeroAlunos: 0,
@@ -41,7 +42,7 @@ export class HomeComponent implements OnInit {
 
   valorBusca: string = '';
 
-  alunosEncontrados: UsuarioInterface[] = [];
+  alunosEncontrados: AlunoInterface[] = [];
 
   notas: NotaInterface[] = [];
   materias: CursosInterface[] = [];
@@ -55,7 +56,7 @@ export class HomeComponent implements OnInit {
     private materiasService: MateriasService,
     private notasService: NotasService,
     private cursosExtraService: CursosExtraService,
-    private menuLateralService: MenuLateralService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -109,9 +110,7 @@ export class HomeComponent implements OnInit {
       this.alunosEncontrados = this.alunos.filter(
         (aluno) =>
           aluno.nome.toLowerCase().includes(this.valorBusca.toLowerCase()) ||
-          aluno.telefone
-            .toLowerCase()
-            .includes(this.valorBusca.toLowerCase()) ||
+          //aluno.telefone
           aluno.email.toLowerCase().includes(this.valorBusca.toLowerCase())
       );
     } else {
@@ -136,17 +135,14 @@ export class HomeComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
 }

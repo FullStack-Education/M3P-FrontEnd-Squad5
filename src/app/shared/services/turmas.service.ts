@@ -23,7 +23,6 @@ export class TurmasService {
   }
 
   postTurma(turma: TurmaInterface): Observable<TurmaInterface> {
-    console.log('TurmamInterface', turma);
     return this.httpClient.post<TurmaInterface>(this.API_URL, turma, {
       headers: this.authService.getHeaders(),
     });

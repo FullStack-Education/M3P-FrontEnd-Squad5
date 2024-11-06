@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'app/shared/services/auth.service';
+import { NgIconComponent } from '@ng-icons/core';
 
 @Component({
   selector: 'app-card-docente',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIconComponent],
   templateUrl: './card-docente.component.html',
   styleUrl: './card-docente.component.scss',
 })

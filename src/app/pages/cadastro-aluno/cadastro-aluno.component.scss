@@ -1,99 +1,98 @@
-.cadastro-aluno {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f5ebff;
-    border-radius: 10px;
-  }
+// .cadastro-aluno {
+//     max-width: 600px;
+//     margin: 0 auto;
+//     padding: 20px;
+//     background-color: #f5ebff;
+//     border-radius: 10px;
+//   }
 
-    .cadastro-aluno h1 {
-        text-align: left;
-        margin-bottom: 20px;
-        font-size: xx-large;
-    }
-  
-  .cadastro-aluno form div {
-    margin-bottom: 15px;
-  }
-  
-  .cadastro-aluno label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .cadastro-aluno input,
-  .cadastro-aluno select {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-  
-  .botoes {
-    display: flex;
-    justify-content: flex-end;
-    gap: 2rem;
-  }
-  
+//     .cadastro-aluno h1 {
+//         text-align: left;
+//         margin-bottom: 20px;
+//         font-size: xx-large;
+//     }
 
-  .botoes button {
-    width: 100px;
-    padding: 10px;
-    background-color: #333;
-    border-radius: 5%;
-    border: none;
-    cursor: pointer;
-    margin-top: 5px;
-  }
-  
-  button:hover {
-    background-color: #777676;
-  }
-  
-  .botoes button[disabled] {
-    visibility: hidden;
-  }
+//   .cadastro-aluno form div {
+//     margin-bottom: 15px;
+//   }
 
-  #save-bt {
-    background:  rgb(131, 234, 131);
-  }
+//   .cadastro-aluno label {
+//     display: block;
+//     margin-bottom: 5px;
+//   }
 
-  #edit-bt {
-    background: rgb(131, 234, 131);
-  }
+//   .cadastro-aluno input,
+//   .cadastro-aluno select {
+//     width: 100%;
+//     padding: 8px;
+//     box-sizing: border-box;
+//   }
 
-  #delete-bt {
-    background: rgb(221, 121, 121);
-  }
+//   .botoes {
+//     display: flex;
+//     justify-content: flex-end;
+//     gap: 2rem;
+//   }
 
-  .container-grid{
-	/* //Instrução para definir o display como grid */
-	display: grid;
-	/* //Instrução para definir a quantidade de colunas */
-	grid-template-columns: 2fr;
-	/* //Instrução para definir o espaçamento entre as colunas */
-	gap: 15px;
-	
-}
+//   .botoes button {
+//     width: 100px;
+//     padding: 10px;
+//     background-color: #333;
+//     border-radius: 5%;
+//     border: none;
+//     cursor: pointer;
+//     margin-top: 5px;
+//   }
 
-.container-grid div{
-    display: flex;
-    flex-direction: column;
-}
+//   button:hover {
+//     background-color: #777676;
+//   }
 
-.col-1{
-    grid-column: span 1;
-}
+//   .botoes button[disabled] {
+//     visibility: hidden;
+//   }
 
-.col-2{
-    grid-column: span 2;
-}
+//   #save-bt {
+//     background:  rgb(131, 234, 131);
+//   }
 
-.col-3{
-    grid-column: span 3;
-}
+//   #edit-bt {
+//     background: rgb(131, 234, 131);
+//   }
 
-.label-error{
-  margin-bottom: 5px;
-  color: red;
-  font-size: 10px;
-}
+//   #delete-bt {
+//     background: rgb(221, 121, 121);
+//   }
+
+//   .container-grid{
+// 	/* //Instrução para definir o display como grid */
+// 	display: grid;
+// 	/* //Instrução para definir a quantidade de colunas */
+// 	grid-template-columns: 2fr;
+// 	/* //Instrução para definir o espaçamento entre as colunas */
+// 	gap: 15px;
+
+// }
+
+// .container-grid div{
+//     display: flex;
+//     flex-direction: column;
+// }
+
+// .col-1{
+//     grid-column: span 1;
+// }
+
+// .col-2{
+//     grid-column: span 2;
+// }
+
+// .col-3{
+//     grid-column: span 3;
+// }
+
+// .label-error{
+//   margin-bottom: 5px;
+//   color: red;
+//   font-size: 10px;
+// }

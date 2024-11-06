@@ -63,6 +63,24 @@ export class CadastroDocenteComponent implements OnInit {
         if (usuario) {
           this.docenteForm.patchValue({
             nome: usuario.nome || '',
+            genero: usuario.genero || '',
+            dataNascimento: usuario.dataNascimento || '',
+            cpf: usuario.cpf || '',
+            rg: usuario.rg || '',
+            estadoCivil: usuario.estadoCivil || '',
+            telefone: usuario.telefone || '',
+            email: usuario.email || '',
+            senha: usuario.senha || '',
+            naturalidade: usuario.naturalidade || '',
+            cep: usuario.cep || '',
+            cidade: usuario.cidade || '',
+            estado: usuario.estado || '',
+            logradouro: usuario.logradouro || '',
+            numero: usuario.numero || '',
+            complemento: usuario.complemento || '',
+            bairro: usuario.bairro || '',
+            pontoReferencia: usuario.pontoReferencia || '',
+            materias: usuario.materias || [],
           });
         }
       });

@@ -1,52 +1,52 @@
-<div class="cadastro-nota" *ngIf="isAdmin || isDocente">
-    <h1>Cadastrar nova nota</h1>
-    <form [formGroup]="notaForm" class="container-grid" (ngSubmit)="salvarNota()">
-        <div class="col-4">
-            <label for="turma">Turma:</label>
-            <select id="turma" formControlName="turma">
+<div class="container" *ngIf="isAdmin || isDocente">
+    <h1 class="display-5 mb-4">Cadastrar nova nota</h1>
+    <hr>
+    <form [formGroup]="notaForm" class="row g-3" (ngSubmit)="salvarNota()">
+        <div class="col-12">
+            <label for="turma" class="form-label">Turma:</label>
+            <select id="turma" class="form-select" formControlName="turma">
                 <option value="" disabled selected>Selecione uma opção</option>
                 <option *ngFor="let turma of turmas">{{ turma.nome }}</option>
             </select>
         </div>
-        <div class="col-2">
-            <label for="docente">Docente:</label>
-            <select id="docente" formControlName="docente">
+        <div class="col-6">
+            <label for="docente" class="form-label">Docente:</label>
+            <select id="docente" class="form-select" formControlName="docente">
                 <option value="" disabled selected *ngIf="isAdmin ">Selecione uma opção</option>
                 <option *ngFor="let docente of docentes">{{ docente.nome }}</option>
             </select>
         </div>
-        <div class="col-2">
-            <label for="materia">Nome da matéria:</label>
-            <select id="materia" formControlName="materia">
+        <div class="col-6">
+            <label for="materia" class="form-label">Nome da matéria:</label>
+            <select id="materia" class="form-select" formControlName="materia">
                 <option value="" disabled selected>Selecione uma opção</option>
                 <option *ngFor="let materia of materias">{{ materia }}</option>
             </select>
         </div>
-        <div class="col-2">
-            <label for="nome">Nome da avaliação:</label>
-            <input id="nome" formControlName="nome" type="text">
+        <div class="col-12">
+            <label for="nome" class="form-label">Nome da avaliação:</label>
+            <input id="nome" class="form-control" formControlName="nome" type="text">
         </div>
-        <div class="col-2">
-            <label for="aluno">Aluno:</label>
-            <select id="aluno" formControlName="aluno">
+        <div class="col-4">
+            <label for="aluno" class="form-label">Aluno:</label>
+            <select id="aluno" class="form-select" formControlName="aluno">
                 <option value="" disabled selected>Selecione uma opção</option>
                 <option *ngFor="let aluno of alunos">{{ aluno.nome }}</option>
             </select>
         </div>
-        <div>
-            <label for="data">Data:</label>
-            <input id="data" formControlName="data" type="date">
+        <div class="col-4">
+            <label for="data" class="form-label">Data:</label>
+            <input id="data" class="form-control" formControlName="data" type="date">
         </div>
-        <div>
-            <label for="nota">Nota:</label>
-            <input id="nota" formControlName="nota" type="number" min="0" max="10">
+        <div class="col-4">
+            <label for="nota" class="form-label">Nota:</label>
+            <input id="nota" class="form-control" formControlName="nota" type="number" min="0" max="10">
         </div>
-
-
-        <div class="botoes">
-            <button type="submit" [disabled]="isEdit">Salvar</button>
-            <button type="button" [disabled]="!isEdit">Editar</button>
-            <button type="button" [disabled]="!isEdit">Deletar</button>
+        <hr />
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary me-2" [disabled]="isEdit">Salvar</button>
+            <button type="button" class="btn btn-secondary mx-2" [disabled]="!isEdit">Editar</button>
+            <button type="button" class="btn btn-danger ms-2" [disabled]="!isEdit">Deletar</button>
         </div>
     </form>
 </div>

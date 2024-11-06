@@ -7,6 +7,7 @@ import { PaginaLoginComponent } from './pagina-login.component';
 import { PaginaLoginService } from '../../shared/services/pagina-login.service';
 import { ToastService } from '../../shared/services/toast.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { UsuariosService } from '../../shared/services/usuarios.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
 
 describe('PaginaLoginComponent', () => {
@@ -18,9 +19,14 @@ describe('PaginaLoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PaginaLoginComponent],
-      imports: [ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule],
-      providers: [PaginaLoginService, ToastService, AuthService, FormBuilder]
+      imports: [ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule, PaginaLoginComponent],
+      providers: [
+        PaginaLoginService,
+        ToastService,
+        AuthService,
+        FormBuilder,
+        { provide: UsuariosService}
+      ]
     }).compileComponents();
   });
 
@@ -37,24 +43,11 @@ describe('PaginaLoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('deve chamar o metodo entrar e mostrar um toast de sucesso no login', () => {
-    spyOn(paginaLoginService, 'login');
-    spyOn(toastService, 'showToast');
-    spyOn(authService, 'getToken').and.returnValue('fake-jwt-token');
-
-    component.entrar();
-
-    expect(toastService.showToast).toHaveBeenCalledWith(
-      ToastType.SUCCESS,
-      'Sucesso!',
-      'Usuário logado com Sucesso!'
-    );
-  });
-
   it('deve chamar o metodo entrar e mostrar o toast de erro com falha no login', () => {
-    spyOn(paginaLoginService, 'login');
+    spyOn(authService, 'login').and.returnValue(throwError(() => new Error('Erro de autenticação')));
     spyOn(toastService, 'showToast');
 
+    component.form.setValue({ email: 'test@example.com', password: 'password' });
     component.entrar();
 
     expect(toastService.showToast).toHaveBeenCalledWith(

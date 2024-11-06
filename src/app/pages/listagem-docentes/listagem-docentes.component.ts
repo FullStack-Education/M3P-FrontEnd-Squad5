@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DocentesService } from '../../shared/services/docentes.service';
 import { AuthService } from 'app/shared/services/auth.service';
 import { DocenteInterface } from 'app/shared/interfaces/docentes.interface';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-listagem-docentes',
@@ -14,9 +15,9 @@ import { DocenteInterface } from 'app/shared/interfaces/docentes.interface';
   styleUrl: './listagem-docentes.component.scss',
 })
 export class ListagemDocentesComponent implements OnInit {
-  docentes: DocenteInterface[] = [];
+  docentes: Observable<DocenteInterface[]>;
   valorBusca: string = '';
-  docentesEncontrados: DocenteInterface[] = [];
+  docentesEncontrados: Observable<DocenteInterface[]>;
 
   constructor(
     private authService: AuthService,
@@ -28,25 +29,27 @@ export class ListagemDocentesComponent implements OnInit {
   }
 
   carregarDocentes(): void {
-    this.docenteService.getDocentesMatriculados().subscribe((docentes) => {
-      this.docentes = docentes;
-    });
+    this.docentes = this.docenteService.getDocentesMatriculados();
   }
 
   buscaDocente() {
-    if (this.valorBusca) {
-      this.docentesEncontrados = this.docentes.filter(
-        (docente) =>
-          docente.nome.toLowerCase().includes(this.valorBusca.toLowerCase()) ||
-          docente.id.toLowerCase().includes(this.valorBusca.toLowerCase())
-      );
-    } else {
-      this.docentesEncontrados = this.docentes;
-    }
+    if (!this.valorBusca) this.docentesEncontrados = this.docentes;
+
+    let filterWords = this.valorBusca.toLocaleLowerCase();
+    this.docentesEncontrados = this.docentes.pipe(
+      map((docentes) =>
+        docentes.filter(
+          (docente) =>
+            docente.id === filterWords ||
+            docente.nome.toLowerCase().includes(filterWords) ||
+            docente.email.toLowerCase().includes(filterWords)
+        )
+      )
+    );
   }
 
   selecionaPrimeiroDocente() {
-    this.valorBusca = this.docentesEncontrados[0].nome;
+    //this.valorBusca = this.docentesEncontrados;
     this.buscaDocente();
   }
 

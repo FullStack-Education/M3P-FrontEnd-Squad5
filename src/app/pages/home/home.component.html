@@ -70,15 +70,15 @@
         </div>
       </div>
       <div class="resultados-busca g-5" *ngIf="valorBusca; else templateTodosAlunos">
-        <!-- <app-card *ngFor="let aluno of alunosEncontrados" [aluno]="aluno">
-        </app-card> -->
+        <app-card *ngFor="let aluno of alunosEncontrados" [aluno]="aluno">
+        </app-card>
       </div>
     </div>
   </div>
   <ng-template #templateTodosAlunos>
     <div *ngIf="isAdmin || isDocente" class="alunos d-flex justify-content-center align-content-around flex-wrap">
-      <!-- <app-card *ngFor="let aluno of alunos" [aluno]="aluno">
-      </app-card> -->
+      <app-card *ngFor="let aluno of alunos" [aluno]="aluno">
+      </app-card>
     </div>
   </ng-template>
 

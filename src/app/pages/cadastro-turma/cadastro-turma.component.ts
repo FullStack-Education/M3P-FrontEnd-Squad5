@@ -95,7 +95,6 @@ export class CadastroTurmaComponent implements OnInit {
       };
 
       this.turmaService.postTurma(novaTurma).subscribe((retorno) => {
-        console.log('Passou');
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',

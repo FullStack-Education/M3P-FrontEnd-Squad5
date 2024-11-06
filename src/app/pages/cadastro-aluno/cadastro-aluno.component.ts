@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
+  FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -22,7 +24,7 @@ import { Profile } from 'app/shared/enums/profile.enum';
 @Component({
   selector: 'app-cadastro-aluno',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './cadastro-aluno.component.html',
   styleUrl: './cadastro-aluno.component.scss',
 })
@@ -32,10 +34,11 @@ export class CadastroAlunoComponent implements OnInit {
   isEdit = false;
   idAluno: string | undefined;
 
-  generos = ['', 'Masculino', 'Feminino', 'Outro'];
-  estadosCivis = ['', 'Solteiro(a)', 'Casado(a)', 'Divorciado(a)', 'Viúvo(a)'];
+  generos = ['Masculino', 'Feminino', 'Outro'];
+  estadosCivis = ['Solteiro(a)', 'Casado(a)', 'Divorciado(a)', 'Viúvo(a)'];
 
   constructor(
+    private fb: FormBuilder,
     private viaCepService: ViaCepService,
     private usuarioService: UsuariosService,
     private activatedRoute: ActivatedRoute,
@@ -78,45 +81,54 @@ export class CadastroAlunoComponent implements OnInit {
       });
     }
 
-    this.alunoForm = new FormGroup({
-      nome: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(64),
-      ]),
-      genero: new FormControl('', Validators.required),
-      dataNascimento: new FormControl('', Validators.required),
-      cpf: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/),
-      ]),
-      rg: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      estadoCivil: new FormControl('', Validators.required),
-      telefone: new FormControl('', [
-        Validators.required,
-        Validators.pattern(
-          /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/
-        ),
-      ]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      senha: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
-      naturalidade: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(64),
-      ]),
-      cep: new FormControl('', Validators.required),
-      cidade: new FormControl('', Validators.required),
-      estado: new FormControl('', Validators.required),
-      logradouro: new FormControl('', Validators.required),
-      numero: new FormControl('', Validators.required),
-      complemento: new FormControl(''),
-      bairro: new FormControl('', Validators.required),
-      pontoReferencia: new FormControl(''),
-      turma: new FormControl([], Validators.required),
+    this.alunoForm = this.fb.group({
+      nome: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(64),
+        ],
+      ],
+      genero: ['', Validators.required],
+      dataNascimento: ['', Validators.required],
+      cpf: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/),
+        ],
+      ],
+      rg: ['', [Validators.required, Validators.maxLength(20)]],
+      estadoCivil: ['', Validators.required],
+      telefone: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/
+          ),
+        ],
+      ],
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required, Validators.minLength(8)]],
+      naturalidade: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(64),
+        ],
+      ],
+      cep: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['', Validators.required],
+      logradouro: ['', Validators.required],
+      numero: ['', Validators.required],
+      complemento: [''],
+      bairro: ['', Validators.required],
+      pontoReferencia: [''],
+      turmas: [[], Validators.required],
     });
 
     this.turmasService.getTurmas().subscribe((turmas) => {

@@ -17,6 +17,7 @@ import { ToastType } from 'app/shared/enums/toast-type.enum';
 import { DocentesService } from 'app/shared/services/docentes.service';
 import { DocenteInterface } from 'app/shared/interfaces/docentes.interface';
 import { AuthService } from 'app/shared/services/auth.service';
+import { Profile } from 'app/shared/enums/profile.enum';
 
 @Component({
   selector: 'app-cadastro-docente',
@@ -45,7 +46,6 @@ export class CadastroDocenteComponent implements OnInit {
 
   constructor(
     private viaCepService: ViaCepService,
-    private usuarioService: UsuariosService,
     private docenteService: DocentesService,
     private turmasService: TurmasService,
     private notasService: NotasService,
@@ -130,7 +130,7 @@ export class CadastroDocenteComponent implements OnInit {
     if (this.docenteForm.valid) {
       const novoDocente: DocenteInterface = {
         ...this.docenteForm.value,
-        perfil: 'Docente',
+        perfil: Profile.PROFESSOR,
         idade: this.calcularIdade(
           new Date(this.docenteForm.value.dataNascimento)
         ),
@@ -157,7 +157,7 @@ export class CadastroDocenteComponent implements OnInit {
     if (this.isEdit && this.docenteForm.valid) {
       const docenteEditado: DocenteInterface = {
         ...this.docenteForm.value,
-        perfil: 'Docente',
+        perfil: Profile.PROFESSOR,
         id: this.idDocente,
         idade: this.calcularIdade(
           new Date(this.docenteForm.value.dataNascimento)

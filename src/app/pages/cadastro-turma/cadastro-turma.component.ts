@@ -28,7 +28,6 @@ export class CadastroTurmaComponent implements OnInit {
   turmaForm!: FormGroup;
   isEdit = false;
   idTurma: string | undefined;
-  perfilLogado: string = '';
   docentes: any[] = [];
   cursos: any[] = [];
 
@@ -70,11 +69,11 @@ export class CadastroTurmaComponent implements OnInit {
       curso: new FormControl('', Validators.required),
     });
 
-    if (this.perfilLogado === 'Docente') {
+    if (this.isDocente) {
       const docenteNome = this.getNomeUsuarioLogado();
       this.docentes = [{ nome: docenteNome }];
       this.turmaForm.controls['docente'].disable();
-    } else if (this.perfilLogado === 'Administrador') {
+    } else if (this.isAdmin) {
       this.docentesService.getDocentesMatriculados().subscribe((docentes) => {
         this.docentes = docentes;
       });
@@ -83,7 +82,7 @@ export class CadastroTurmaComponent implements OnInit {
 
   salvarTurma() {
     if (this.turmaForm.valid) {
-      if (this.perfilLogado === 'Docente') {
+      if (this.isDocente) {
         this.turmaForm.controls['docente'].setValue(
           this.getNomeUsuarioLogado()
         );

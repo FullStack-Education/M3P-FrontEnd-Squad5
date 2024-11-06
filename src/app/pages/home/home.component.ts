@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { NgIconComponent } from '@ng-icons/core';
 import { PreventDefaultDirective } from 'app/shared/directives/prevent-default.directive';
 import { AuthService } from 'app/shared/services/auth.service';
+import { AlunoInterface } from 'app/shared/interfaces/alunos.interface';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,7 @@ import { AuthService } from 'app/shared/services/auth.service';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  alunos: UsuarioInterface[] = [];
+  alunos: AlunoInterface[] = [];
 
   estatisticas: EstatisticasInterface = {
     numeroAlunos: 0,
@@ -41,7 +42,7 @@ export class HomeComponent implements OnInit {
 
   valorBusca: string = '';
 
-  alunosEncontrados: UsuarioInterface[] = [];
+  alunosEncontrados: AlunoInterface[] = [];
 
   notas: NotaInterface[] = [];
   materias: CursosInterface[] = [];

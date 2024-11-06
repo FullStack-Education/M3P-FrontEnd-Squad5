@@ -29,7 +29,6 @@ export class CadastroNotaComponent implements OnInit {
   notaForm!: FormGroup;
   isEdit = false;
   idNota: string | undefined;
-  perfilLogado: string = '';
   docentes: any[] = [];
   turmas: any[] = [];
   alunos: any[] = [];
@@ -88,11 +87,11 @@ export class CadastroNotaComponent implements OnInit {
       this.alunos = alunos;
     });
 
-    if (this.perfilLogado === 'Docente') {
+    if (this.isDocente) {
       const docenteNome = this.getNomeUsuarioLogado();
       this.docentes = [{ nome: docenteNome }];
       this.notaForm.controls['docente'].disable();
-    } else if (this.perfilLogado === 'Administrador') {
+    } else if (this.isAdmin) {
       this.docentesService.getDocentesMatriculados().subscribe((docentes) => {
         this.docentes = docentes;
       });
@@ -101,7 +100,7 @@ export class CadastroNotaComponent implements OnInit {
 
   salvarNota() {
     if (this.notaForm.valid) {
-      if (this.perfilLogado === 'Docente') {
+      if (this.isDocente) {
         this.notaForm.controls['docente'].setValue(this.getNomeUsuarioLogado());
       }
 

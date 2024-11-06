@@ -17,6 +17,7 @@ import { ToastType } from 'app/shared/enums/toast-type.enum';
 import { AlunoService } from 'app/shared/services/aluno.service';
 import { AlunoInterface } from 'app/shared/interfaces/alunos.interface';
 import { AuthService } from 'app/shared/services/auth.service';
+import { Profile } from 'app/shared/enums/profile.enum';
 
 @Component({
   selector: 'app-cadastro-aluno',
@@ -143,7 +144,7 @@ export class CadastroAlunoComponent implements OnInit {
     if (this.alunoForm.valid) {
       const novoAluno: AlunoInterface = {
         ...this.alunoForm.value,
-        perfil: 'Aluno',
+        perfil: Profile.ALUNO,
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
@@ -170,9 +171,9 @@ export class CadastroAlunoComponent implements OnInit {
 
   editarAluno(): void {
     if (this.isEdit && this.alunoForm.valid) {
-      const alunoEditado: UsuarioInterface = {
+      const alunoEditado: AlunoInterface = {
         ...this.alunoForm.value,
-        perfil: 'Aluno',
+        perfil: Profile.ALUNO,
         id: this.idAluno,
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)

@@ -17,7 +17,6 @@ export class PaginaLoginService {
   ) {}
 
   login(usuario: UsuarioInterface) {
-    console.log(sessionStorage);
     sessionStorage.setItem('usuarioLogado', JSON.stringify(usuario));
   }
 

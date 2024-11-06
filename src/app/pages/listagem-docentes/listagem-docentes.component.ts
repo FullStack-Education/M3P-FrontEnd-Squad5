@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CardDocenteComponent } from '../../shared/components/card-docente/card-docente.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { DocentesService } from '../../shared/services/docentes.service';
 import { AuthService } from 'app/shared/services/auth.service';
+import { DocenteInterface } from 'app/shared/interfaces/docentes.interface';
 
 @Component({
   selector: 'app-listagem-docentes',
@@ -14,9 +14,9 @@ import { AuthService } from 'app/shared/services/auth.service';
   styleUrl: './listagem-docentes.component.scss',
 })
 export class ListagemDocentesComponent implements OnInit {
-  docentes: UsuarioInterface[] = [];
+  docentes: DocenteInterface[] = [];
   valorBusca: string = '';
-  docentesEncontrados: UsuarioInterface[] = [];
+  docentesEncontrados: DocenteInterface[] = [];
 
   constructor(
     private authService: AuthService,

@@ -18,7 +18,6 @@ export class NotasAlunosComponent implements OnInit {
   notas: any[] = [];
   turmas: TurmaInterface[] = [];
   alunoName: string = '';
-  perfilLogado: string = '';
 
   constructor(
     private notasService: NotasService,

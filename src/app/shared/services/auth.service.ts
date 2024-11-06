@@ -11,12 +11,10 @@ import { Profile } from '../enums/profile.enum';
 })
 export class AuthService {
   private API_URL = `${environment.apiUrl}`;
-  private perfilLogado: Profile;
+
   private tokenKey = 'jwt_token';
 
-  constructor(private http: HttpClient) {
-    this.perfilLogado = this.getPerfilUsuarioLogado();
-  }
+  constructor(private http: HttpClient) {}
 
   login = (email: string, password: string): Observable<TokenResponse> =>
     this.http
@@ -46,17 +44,18 @@ export class AuthService {
     new HttpHeaders({ Authorization: `Bearer ${this.getToken()}` });
 
   get isAdmin(): boolean {
-    return this.perfilLogado === Profile.ADMIN;
+    const perfilLogado = this.getPerfilUsuarioLogado();
+    return perfilLogado === Profile.ADMIN;
   }
 
   get isDocente(): boolean {
-    return (
-      this.perfilLogado !== Profile.ADMIN && this.perfilLogado !== Profile.ALUNO
-    );
+    const perfilLogado = this.getPerfilUsuarioLogado();
+    return perfilLogado !== Profile.ADMIN && perfilLogado !== Profile.ALUNO;
   }
 
   get isAluno(): boolean {
-    return this.perfilLogado === Profile.ALUNO;
+    const perfilLogado = this.getPerfilUsuarioLogado();
+    return perfilLogado === Profile.ALUNO;
   }
 
   private getPerfilUsuarioLogado(): Profile {

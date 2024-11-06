@@ -1,9 +1,11 @@
+import { Profile } from "../enums/profile.enum";
+
 export interface DocenteInterface {
     id: string;
     nome: string;
     email: string;
     senha: string;
-    perfil: string;
+    perfil: Profile;
     idade: number;
     genero?: string;
     dataNascimento?: string;

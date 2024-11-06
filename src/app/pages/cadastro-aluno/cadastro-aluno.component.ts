@@ -10,20 +10,21 @@ import { ViaCepService } from '../../shared/services/via-cep.service';
 import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuLateralService } from '../../shared/services/menu-lateral.service';
 import { TurmasService } from '../../shared/services/turmas.service';
 import { NotasService } from '../../shared/services/notas.service';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
 import { AlunoService } from 'app/shared/services/aluno.service';
 import { AlunoInterface } from 'app/shared/interfaces/alunos.interface';
+import { AuthService } from 'app/shared/services/auth.service';
+import { Profile } from 'app/shared/enums/profile.enum';
 
 @Component({
   selector: 'app-cadastro-aluno',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './cadastro-aluno.component.html',
-  styleUrl: './cadastro-aluno.component.css',
+  styleUrl: './cadastro-aluno.component.scss',
 })
 export class CadastroAlunoComponent implements OnInit {
   alunoForm!: FormGroup;
@@ -38,9 +39,9 @@ export class CadastroAlunoComponent implements OnInit {
     private viaCepService: ViaCepService,
     private usuarioService: UsuariosService,
     private activatedRoute: ActivatedRoute,
-    private menuLateralService: MenuLateralService,
     private turmasService: TurmasService,
     private notasService: NotasService,
+    private authService: AuthService,
     private toastService: ToastService,
     private alunoService: AlunoService
   ) {}
@@ -93,7 +94,9 @@ export class CadastroAlunoComponent implements OnInit {
       estadoCivil: new FormControl('', Validators.required),
       telefone: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/),
+        Validators.pattern(
+          /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/
+        ),
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [
@@ -141,14 +144,14 @@ export class CadastroAlunoComponent implements OnInit {
     if (this.alunoForm.valid) {
       const novoAluno: AlunoInterface = {
         ...this.alunoForm.value,
-        perfil: 'Aluno',
+        perfil: Profile.ALUNO,
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
         id: this.idAluno ? this.idAluno : this.gerarId(),
-        turma: parseInt(this.alunoForm.value.turma[0])
+        turma: parseInt(this.alunoForm.value.turma[0]),
       };
-      console.log("turmas");
+      console.log('turmas');
       console.log(novoAluno.turma);
       this.alunoService.postAluno(novoAluno).subscribe((retorno) => {
         this.toastService.showToast(
@@ -168,14 +171,14 @@ export class CadastroAlunoComponent implements OnInit {
 
   editarAluno(): void {
     if (this.isEdit && this.alunoForm.valid) {
-      const alunoEditado: UsuarioInterface = {
+      const alunoEditado: AlunoInterface = {
         ...this.alunoForm.value,
-        perfil: 'Aluno',
+        perfil: Profile.ALUNO,
         id: this.idAluno,
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
-        turma: parseInt(this.alunoForm.value.turma[0])
+        turma: parseInt(this.alunoForm.value.turma[0]),
       };
       this.alunoService.putAluno(alunoEditado).subscribe(() => {
         this.toastService.showToast(
@@ -238,17 +241,14 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
 }

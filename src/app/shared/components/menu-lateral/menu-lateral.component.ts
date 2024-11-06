@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaginaLoginService } from '../../services/pagina-login.service';
-import { MenuLateralService } from '../../services/menu-lateral.service';
 import {
   NgbCollapseModule,
   NgbOffcanvas,
@@ -17,6 +16,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgIconComponent } from '@ng-icons/core';
 import { PreventDefaultDirective } from 'app/shared/directives/prevent-default.directive';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -39,7 +39,7 @@ export class MenuLateralComponent {
   constructor(
     private router: Router,
     public paginaLoginService: PaginaLoginService,
-    public menuLateralService: MenuLateralService,
+    private authService: AuthService,
     private offcanvasService: NgbOffcanvas
   ) {}
 
@@ -55,42 +55,23 @@ export class MenuLateralComponent {
   }
 
   get isAdmin(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
   open() {
     this.offcanvasService
       .open(this.offcanvas, {
         panelClass: 'offcanvas-panel',
       })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    switch (reason) {
-      case OffcanvasDismissReasons.ESC:
-        return 'by pressing ESC';
-      case OffcanvasDismissReasons.BACKDROP_CLICK:
-        return 'by clicking on the backdrop';
-      default:
-        return `with: ${reason}`;
-    }
+      .result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      });
   }
 }

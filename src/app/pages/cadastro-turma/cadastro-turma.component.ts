@@ -10,38 +10,42 @@ import { ViaCepService } from '../../shared/services/via-cep.service';
 import { TurmaInterface } from '../../shared/interfaces/turma.interface';
 import { TurmasService } from '../../shared/services/turmas.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuLateralService } from '../../shared/services/menu-lateral.service';
 import { DocentesService } from '../../shared/services/docentes.service';
 import { UsuarioInterface } from '../../shared/interfaces/usuario.interface';
 import { ToastService } from 'app/shared/services/toast.service';
 import { ToastType } from 'app/shared/enums/toast-type.enum';
+import { CursosExtraService } from 'app/shared/services/cursos-extra.service';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-cadastro-turma',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './cadastro-turma.component.html',
-  styleUrl: './cadastro-turma.component.css',
+  styleUrl: './cadastro-turma.component.scss',
 })
 export class CadastroTurmaComponent implements OnInit {
   turmaForm!: FormGroup;
   isEdit = false;
   idTurma: string | undefined;
-  perfilLogado: string = '';
   docentes: any[] = [];
+  cursos: any[] = [];
 
   constructor(
     private viaCepService: ViaCepService,
     private turmaService: TurmasService,
     private activatedRoute: ActivatedRoute,
-    private menuLateralService: MenuLateralService,
+    private authService: AuthService,
     private docentesService: DocentesService,
+    private cursosService: CursosExtraService,
     private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
     this.idTurma = this.activatedRoute.snapshot.params['id'];
-    this.perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
+    this.cursosService.getCursosExtras().subscribe((cursos) => {
+      this.cursos = cursos;
+    });
 
     if (this.idTurma) {
       this.isEdit = true;
@@ -62,13 +66,14 @@ export class CadastroTurmaComponent implements OnInit {
       dataTermino: new FormControl('', Validators.required),
       horario: new FormControl('', Validators.required),
       docente: new FormControl('', Validators.required),
+      curso: new FormControl('', Validators.required),
     });
 
-    if (this.perfilLogado === 'Docente') {
+    if (this.isDocente) {
       const docenteNome = this.getNomeUsuarioLogado();
       this.docentes = [{ nome: docenteNome }];
       this.turmaForm.controls['docente'].disable();
-    } else if (this.perfilLogado === 'Administrador') {
+    } else if (this.isAdmin) {
       this.docentesService.getDocentesMatriculados().subscribe((docentes) => {
         this.docentes = docentes;
       });
@@ -77,7 +82,7 @@ export class CadastroTurmaComponent implements OnInit {
 
   salvarTurma() {
     if (this.turmaForm.valid) {
-      if (this.perfilLogado === 'Docente') {
+      if (this.isDocente) {
         this.turmaForm.controls['docente'].setValue(
           this.getNomeUsuarioLogado()
         );
@@ -88,7 +93,9 @@ export class CadastroTurmaComponent implements OnInit {
         id: this.idTurma ? this.idTurma : this.gerarId(),
         professor: this.turmaForm.controls['docente'].value,
       };
+
       this.turmaService.postTurma(novaTurma).subscribe((retorno) => {
+        console.log('Passou');
         this.toastService.showToast(
           ToastType.SUCCESS,
           'Sucesso!',
@@ -123,14 +130,14 @@ export class CadastroTurmaComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    return this.perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    return this.perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    return this.perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
 }

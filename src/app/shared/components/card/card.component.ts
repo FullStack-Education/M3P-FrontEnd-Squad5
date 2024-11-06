@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuLateralService } from '../../services/menu-lateral.service';
 import { NgIconComponent } from '@ng-icons/core';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-card',
@@ -21,10 +21,7 @@ export class CardComponent {
       }
     | undefined;
 
-  constructor(
-    private router: Router,
-    private menuLateralService: MenuLateralService
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   verMais(id: string): void {
     this.router.navigate(['/cadastro-aluno', id]);
@@ -35,17 +32,14 @@ export class CardComponent {
   }
 
   get isAdmin(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Administrador';
+    return this.authService.isAdmin;
   }
 
   get isDocente(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Docente';
+    return this.authService.isDocente;
   }
 
   get isAluno(): boolean {
-    let perfilLogado = this.menuLateralService.getPerfilUsuarioLogado();
-    return perfilLogado === 'Aluno';
+    return this.authService.isAluno;
   }
 }

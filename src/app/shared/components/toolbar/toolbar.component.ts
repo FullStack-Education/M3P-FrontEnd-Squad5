@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgbDropdownModule, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { NgIconComponent } from '@ng-icons/core';
-import { MenuLateralService } from '../../services/menu-lateral.service';
 import { MenuLateralComponent } from '../menu-lateral/menu-lateral.component';
 import { PreventDefaultDirective } from 'app/shared/directives/prevent-default.directive';
 import { PaginaLoginService } from 'app/shared/services/pagina-login.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -26,7 +26,8 @@ export class ToolbarComponent {
 
   constructor(
     private router: Router,
-    public paginaLoginService: PaginaLoginService
+    public paginaLoginService: PaginaLoginService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {

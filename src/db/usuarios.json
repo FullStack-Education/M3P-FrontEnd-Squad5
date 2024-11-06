@@ -83,9 +83,7 @@
       "complemento": "",
       "bairro": "Trindade",
       "pontoReferencia": "",
-      "turmas": [
-        "Biologia Molecular e Genética"
-      ],
+      "turmas": ["Biologia Molecular e Genética"],
       "perfil": "Aluno",
       "idade": 0
     },
@@ -109,9 +107,7 @@
       "complemento": "",
       "bairro": "Centro",
       "pontoReferencia": "",
-      "turmas": [
-        "Biologia Molecular e Genética"
-      ],
+      "turmas": ["Biologia Molecular e Genética"],
       "perfil": "Aluno",
       "idade": -1
     }

@@ -161,7 +161,7 @@ export class CadastroAlunoComponent implements OnInit {
           new Date(this.alunoForm.value.dataNascimento)
         ),
         id: this.idAluno ? this.idAluno : this.gerarId(),
-        turma: parseInt(this.alunoForm.value.turma[0]),
+        turma: parseInt(this.alunoForm.value.turmas[0]),
       };
       console.log('turmas');
       console.log(novoAluno.turma);
@@ -190,7 +190,7 @@ export class CadastroAlunoComponent implements OnInit {
         idade: this.calcularIdade(
           new Date(this.alunoForm.value.dataNascimento)
         ),
-        turma: parseInt(this.alunoForm.value.turma[0]),
+        turma: parseInt(this.alunoForm.value.turmas[0]),
       };
       this.alunoService.putAluno(alunoEditado).subscribe(() => {
         this.toastService.showToast(
